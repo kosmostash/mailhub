@@ -1,0 +1,36 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MailHub Submission API",
+    "version": "1.0.0",
+    "summary": "Submit emails to MailHub and poll their delivery outcome.",
+    "description": "Every request identifies its collection with an `x-collection-id` header.\n\nThis API is meant to be reachable from your own projects' backends only\n(LAN/DMZ), never from the public internet.",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4556/api",
+      "description": "Development server"
+    },
+    {
+      "url": "http://mailhub.internal/api",
+      "description": "Self-hosted install"
+    }
+  ],
+  "paths": {},
+  "components": {
+    "parameters": {
+      "emails_id_index_ts_1024328597_ParamsT668020972_id3208210256": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {}
+  }
+}

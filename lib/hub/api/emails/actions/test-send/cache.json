@@ -1,0 +1,22 @@
+{
+  "hash": 0,
+  "params": {
+    "id": "ParamsT3007113253",
+    "schema": [],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT3007113253",
+      "parameters": [],
+      "comments": [],
+      "text": "{}",
+      "properties": [],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{  }"
+    }
+  },
+  "methods": [],
+  "typeDeclarations": [],
+  "validationDefinitions": [],
+  "referencedFiles": {}
+}

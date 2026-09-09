@@ -1,0 +1,38 @@
+{
+  "hash": 0,
+  "params": {
+    "id": "ParamsT2055526591",
+    "schema": [
+      {
+        "type": "param",
+        "kind": "required",
+        "name": "provider",
+        "const": "provider"
+      }
+    ],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT2055526591",
+      "parameters": [],
+      "comments": [],
+      "text": "{\n  \"provider\": string\n}",
+      "properties": [
+        {
+          "name": "provider",
+          "nameDeclaration": "\"provider\"",
+          "text": "string",
+          "optional": false,
+          "readonly": false,
+          "typeboxSchema": "string"
+        }
+      ],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{ \"provider\": string }"
+    }
+  },
+  "methods": [],
+  "typeDeclarations": [],
+  "validationDefinitions": [],
+  "referencedFiles": {}
+}
