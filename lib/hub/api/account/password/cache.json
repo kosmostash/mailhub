@@ -1,0 +1,172 @@
+{
+  "hash": 625966219,
+  "params": {
+    "id": "ParamsT3182389174",
+    "schema": [],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT3182389174",
+      "parameters": [],
+      "comments": [],
+      "text": "{}",
+      "properties": [],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{  }"
+    }
+  },
+  "methods": [
+    "POST",
+    "PUT"
+  ],
+  "typeDeclarations": [],
+  "validationDefinitions": [
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST3464874783",
+        "text": "{\n      currentPassword: VRefine<string, { minLength: 1, maxLength: 512 }>;\n      newPassword: VRefine<string, { minLength: 10, maxLength: 512 }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST3464874783",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  currentPassword: VRefine<string, {\n    minLength: 1;\n    maxLength: 512\n  }>;\n  newPassword: VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>\n}",
+          "properties": [
+            {
+              "name": "currentPassword",
+              "nameDeclaration": "currentPassword",
+              "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 512\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 512\n  })"
+            },
+            {
+              "name": "newPassword",
+              "nameDeclaration": "newPassword",
+              "text": "VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 10;\n    maxLength: 512\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ currentPassword: (string with {\n    minLength: 1;\n    maxLength: 512\n  }), newPassword: (string with {\n    minLength: 10;\n    maxLength: 512\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST511736455",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ sentTo: string; expiresAt: string; via: string }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPOST511736455",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  sentTo: string;\n  expiresAt: string;\n  via: string\n}",
+            "properties": [
+              {
+                "name": "sentTo",
+                "nameDeclaration": "sentTo",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "expiresAt",
+                "nameDeclaration": "expiresAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "via",
+                "nameDeclaration": "via",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ sentTo: string, expiresAt: string, via: string }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPUT3464874783",
+        "text": "{ code: VRefine<string, { minLength: 1, maxLength: 64 }> }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPUT3464874783",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  code: VRefine<string, {\n    minLength: 1;\n    maxLength: 64\n  }>\n}",
+          "properties": [
+            {
+              "name": "code",
+              "nameDeclaration": "code",
+              "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 64\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 64\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ code: (string with {\n    minLength: 1;\n    maxLength: 64\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPUT3892158224",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ ok: true }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPUT3892158224",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  ok: true\n}",
+            "properties": [
+              {
+                "name": "ok",
+                "nameDeclaration": "ok",
+                "text": "true",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "true"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [
+              "ok"
+            ],
+            "typeboxSchema": "{ ok: true }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {}
+}

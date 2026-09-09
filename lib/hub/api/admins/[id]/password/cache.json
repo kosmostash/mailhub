@@ -1,0 +1,103 @@
+{
+  "hash": 3690975393,
+  "params": {
+    "id": "ParamsT2927949424",
+    "schema": [
+      {
+        "type": "param",
+        "kind": "required",
+        "name": "id",
+        "const": "id"
+      }
+    ],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT2927949424",
+      "parameters": [],
+      "comments": [],
+      "text": "{\n  \"id\": VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
+      "properties": [
+        {
+          "name": "id",
+          "nameDeclaration": "\"id\"",
+          "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+          "optional": false,
+          "readonly": false,
+          "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+        }
+      ],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{ \"id\": (string with {\n    format: \"uuid\"\n  }) }"
+    }
+  },
+  "methods": [
+    "PUT"
+  ],
+  "typeDeclarations": [],
+  "validationDefinitions": [
+    {
+      "method": "PUT",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPUT3412719319",
+        "text": "{ password: VRefine<string, { minLength: 10, maxLength: 512 }> }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPUT3412719319",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  password: VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>\n}",
+          "properties": [
+            {
+              "name": "password",
+              "nameDeclaration": "password",
+              "text": "VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 10;\n    maxLength: 512\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ password: (string with {\n    minLength: 10;\n    maxLength: 512\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPUT1042260568",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ ok: true }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPUT1042260568",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  ok: true\n}",
+            "properties": [
+              {
+                "name": "ok",
+                "nameDeclaration": "ok",
+                "text": "true",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "true"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [
+              "ok"
+            ],
+            "typeboxSchema": "{ ok: true }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {}
+}

@@ -1,0 +1,315 @@
+{
+  "hash": 3038741568,
+  "params": {
+    "id": "ParamsT3821716503",
+    "schema": [
+      {
+        "type": "param",
+        "kind": "required",
+        "name": "id",
+        "const": "id"
+      }
+    ],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT3821716503",
+      "parameters": [],
+      "comments": [],
+      "text": "{\n  \"id\": VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
+      "properties": [
+        {
+          "name": "id",
+          "nameDeclaration": "\"id\"",
+          "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+          "optional": false,
+          "readonly": false,
+          "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+        }
+      ],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{ \"id\": (string with {\n    format: \"uuid\"\n  }) }"
+    }
+  },
+  "methods": [
+    "GET",
+    "PUT",
+    "DELETE"
+  ],
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "ProviderViewT",
+        "path": "~/types/views"
+      },
+      "text": "import type { ProviderViewT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET3325429738",
+          "status": 200,
+          "contentType": "json",
+          "body": "ProviderViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTGET3325429738",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  name: string;\n  type: string;\n  implemented: boolean;\n  config: {\n    [k: string]: ((string) | (number) | (boolean) | (null))\n  };\n  collections: number;\n  createdAt: string;\n  updatedAt: string\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "name",
+                "nameDeclaration": "name",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "type",
+                "nameDeclaration": "type",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "implemented",
+                "nameDeclaration": "implemented",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              },
+              {
+                "name": "config",
+                "nameDeclaration": "config",
+                "text": "{\n    [k: string]: ((string) | (number) | (boolean) | (null))\n  }",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "{ [k: string]: ((string) | (number) | (boolean) | (null)) }"
+              },
+              {
+                "name": "collections",
+                "nameDeclaration": "collections",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "createdAt",
+                "nameDeclaration": "createdAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "updatedAt",
+                "nameDeclaration": "updatedAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              }
+            ],
+            "numericProperties": [
+              "collections"
+            ],
+            "booleanProperties": [
+              "implemented"
+            ],
+            "typeboxSchema": "{ id: string, name: string, type: string, implemented: boolean, config: { [k: string]: ((string) | (number) | (boolean) | (null)) }, collections: number, createdAt: string, updatedAt: string }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPUT3118411284",
+        "text": "{\n      name?: VRefine<string, { minLength: 1, maxLength: 120 }>;\n      type?: VRefine<string, { minLength: 1, maxLength: 40 }>;\n      config?: { [key: string]: string | number | boolean | null };\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPUT3118411284",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  name?: VRefine<string, {\n    minLength: 1;\n    maxLength: 120\n  }>;\n  type?: VRefine<string, {\n    minLength: 1;\n    maxLength: 40\n  }>;\n  config?: {\n    [k: string]: ((string) | (number) | (boolean) | (null))\n  }\n}",
+          "properties": [
+            {
+              "name": "name",
+              "nameDeclaration": "name",
+              "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 120\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 120\n  })"
+            },
+            {
+              "name": "type",
+              "nameDeclaration": "type",
+              "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 40\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 40\n  })"
+            },
+            {
+              "name": "config",
+              "nameDeclaration": "config",
+              "text": "{\n    [k: string]: ((string) | (number) | (boolean) | (null))\n  }",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "{ [k: string]: ((string) | (number) | (boolean) | (null)) }"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ name?: (string with {\n    minLength: 1;\n    maxLength: 120\n  }), type?: (string with {\n    minLength: 1;\n    maxLength: 40\n  }), config?: { [k: string]: ((string) | (number) | (boolean) | (null)) } }"
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPUT3325429738",
+          "status": 200,
+          "contentType": "json",
+          "body": "ProviderViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTPUT3325429738",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  name: string;\n  type: string;\n  implemented: boolean;\n  config: {\n    [k: string]: ((string) | (number) | (boolean) | (null))\n  };\n  collections: number;\n  createdAt: string;\n  updatedAt: string\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "name",
+                "nameDeclaration": "name",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "type",
+                "nameDeclaration": "type",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "implemented",
+                "nameDeclaration": "implemented",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              },
+              {
+                "name": "config",
+                "nameDeclaration": "config",
+                "text": "{\n    [k: string]: ((string) | (number) | (boolean) | (null))\n  }",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "{ [k: string]: ((string) | (number) | (boolean) | (null)) }"
+              },
+              {
+                "name": "collections",
+                "nameDeclaration": "collections",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "createdAt",
+                "nameDeclaration": "createdAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "updatedAt",
+                "nameDeclaration": "updatedAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              }
+            ],
+            "numericProperties": [
+              "collections"
+            ],
+            "booleanProperties": [
+              "implemented"
+            ],
+            "typeboxSchema": "{ id: string, name: string, type: string, implemented: boolean, config: { [k: string]: ((string) | (number) | (boolean) | (null)) }, collections: number, createdAt: string, updatedAt: string }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTDELETE2254060522",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ ok: true }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTDELETE2254060522",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  ok: true\n}",
+            "properties": [
+              {
+                "name": "ok",
+                "nameDeclaration": "ok",
+                "text": "true",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "true"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [
+              "ok"
+            ],
+            "typeboxSchema": "{ ok: true }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2558280027
+  }
+}

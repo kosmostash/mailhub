@@ -1,0 +1,190 @@
+{
+  "hash": 3063356403,
+  "params": {
+    "id": "ParamsT2171001370",
+    "schema": [],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT2171001370",
+      "parameters": [],
+      "comments": [],
+      "text": "{}",
+      "properties": [],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{  }"
+    }
+  },
+  "methods": [
+    "GET",
+    "POST"
+  ],
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "OperatorSummaryT",
+        "path": "~/types/views"
+      },
+      "text": "import type { OperatorSummaryT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET2577327683",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ operators: Array<OperatorSummaryT> }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTGET2577327683",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  operators: Array<{\n    id: string;\n    email: string;\n    disabled: boolean;\n    collections: number;\n    pending: number;\n    lastActivityAt: ((string) | (null));\n    deletable: boolean\n  }>\n}",
+            "properties": [
+              {
+                "name": "operators",
+                "nameDeclaration": "operators",
+                "text": "Array<{\n    id: string;\n    email: string;\n    disabled: boolean;\n    collections: number;\n    pending: number;\n    lastActivityAt: ((string) | (null));\n    deletable: boolean\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, email: string, disabled: boolean, collections: number, pending: number, lastActivityAt: ((string) | (null)), deletable: boolean }>"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ operators: Array<{ id: string, email: string, disabled: boolean, collections: number, pending: number, lastActivityAt: ((string) | (null)), deletable: boolean }> }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST3161559725",
+        "text": "{\n      email: VRefine<string, { format: \"email\", maxLength: 320 }>;\n      /** The initial password, handed over out of band. */\n      password: VRefine<string, { minLength: 10, maxLength: 512 }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST3161559725",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  email: VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>;\n  password: VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>\n}",
+          "properties": [
+            {
+              "name": "email",
+              "nameDeclaration": "email",
+              "text": "VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"email\";\n    maxLength: 320\n  })"
+            },
+            {
+              "name": "password",
+              "nameDeclaration": "password",
+              "text": "VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 10;\n    maxLength: 512\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ email: (string with {\n    format: \"email\";\n    maxLength: 320\n  }), password: (string with {\n    minLength: 10;\n    maxLength: 512\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST2894467348",
+          "status": 201,
+          "contentType": "json",
+          "body": "OperatorSummaryT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTPOST2894467348",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  email: string;\n  disabled: boolean;\n  collections: number;\n  pending: number;\n  lastActivityAt: ((string) | (null));\n  deletable: boolean\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "email",
+                "nameDeclaration": "email",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "disabled",
+                "nameDeclaration": "disabled",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              },
+              {
+                "name": "collections",
+                "nameDeclaration": "collections",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "pending",
+                "nameDeclaration": "pending",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "lastActivityAt",
+                "nameDeclaration": "lastActivityAt",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "deletable",
+                "nameDeclaration": "deletable",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              }
+            ],
+            "numericProperties": [
+              "collections",
+              "pending"
+            ],
+            "booleanProperties": [
+              "disabled",
+              "deletable"
+            ],
+            "typeboxSchema": "{ id: string, email: string, disabled: boolean, collections: number, pending: number, lastActivityAt: ((string) | (null)), deletable: boolean }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2558280027
+  }
+}

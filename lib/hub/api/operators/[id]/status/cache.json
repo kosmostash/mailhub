@@ -1,0 +1,167 @@
+{
+  "hash": 1744836802,
+  "params": {
+    "id": "ParamsT4253981136",
+    "schema": [
+      {
+        "type": "param",
+        "kind": "required",
+        "name": "id",
+        "const": "id"
+      }
+    ],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT4253981136",
+      "parameters": [],
+      "comments": [],
+      "text": "{\n  \"id\": VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
+      "properties": [
+        {
+          "name": "id",
+          "nameDeclaration": "\"id\"",
+          "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+          "optional": false,
+          "readonly": false,
+          "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+        }
+      ],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{ \"id\": (string with {\n    format: \"uuid\"\n  }) }"
+    }
+  },
+  "methods": [
+    "PUT"
+  ],
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "OperatorSummaryT",
+        "path": "~/types/views"
+      },
+      "text": "import type { OperatorSummaryT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "PUT",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPUT3043956721",
+        "text": "{ disabled: boolean }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPUT3043956721",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  disabled: boolean\n}",
+          "properties": [
+            {
+              "name": "disabled",
+              "nameDeclaration": "disabled",
+              "text": "boolean",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "boolean"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [
+            "disabled"
+          ],
+          "typeboxSchema": "{ disabled: boolean }"
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPUT3011860374",
+          "status": 200,
+          "contentType": "json",
+          "body": "OperatorSummaryT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTPUT3011860374",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  email: string;\n  disabled: boolean;\n  collections: number;\n  pending: number;\n  lastActivityAt: ((string) | (null));\n  deletable: boolean\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "email",
+                "nameDeclaration": "email",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "disabled",
+                "nameDeclaration": "disabled",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              },
+              {
+                "name": "collections",
+                "nameDeclaration": "collections",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "pending",
+                "nameDeclaration": "pending",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "lastActivityAt",
+                "nameDeclaration": "lastActivityAt",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "deletable",
+                "nameDeclaration": "deletable",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              }
+            ],
+            "numericProperties": [
+              "collections",
+              "pending"
+            ],
+            "booleanProperties": [
+              "disabled",
+              "deletable"
+            ],
+            "typeboxSchema": "{ id: string, email: string, disabled: boolean, collections: number, pending: number, lastActivityAt: ((string) | (null)), deletable: boolean }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2558280027
+  }
+}

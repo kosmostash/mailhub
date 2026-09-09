@@ -1,0 +1,172 @@
+{
+  "hash": 638894743,
+  "params": {
+    "id": "ParamsT3756010019",
+    "schema": [
+      {
+        "type": "param",
+        "kind": "required",
+        "name": "id",
+        "const": "id"
+      }
+    ],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT3756010019",
+      "parameters": [],
+      "comments": [],
+      "text": "{\n  \"id\": VRefine<string, {\n    minLength: 4;\n    maxLength: 64\n  }>\n}",
+      "properties": [
+        {
+          "name": "id",
+          "nameDeclaration": "\"id\"",
+          "text": "VRefine<string, {\n    minLength: 4;\n    maxLength: 64\n  }>",
+          "optional": false,
+          "readonly": false,
+          "typeboxSchema": "(string with {\n    minLength: 4;\n    maxLength: 64\n  })"
+        }
+      ],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{ \"id\": (string with {\n    minLength: 4;\n    maxLength: 64\n  }) }"
+    }
+  },
+  "methods": [
+    "GET"
+  ],
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "EmailSummaryT",
+        "path": "~/types/views"
+      },
+      "text": "import type { EmailSummaryT } from \"~/types/views\";"
+    },
+    {
+      "typeAliasDeclaration": {
+        "name": "EmailPageViewT"
+      },
+      "text": "type EmailPageViewT = {\n  emails: Array<EmailSummaryT>;\n  total: number;\n  limit: number;\n  offset: number;\n};"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "query",
+      "schema": {
+        "id": "QueryTGET3570308899",
+        "text": "{\n      state?: \"pending\" | \"ready\" | \"sent\";\n      deliveryStatus?: \"unknown\" | \"sent\" | \"delivered\" | \"bounced\";\n      limit?: VRefine<number, { minimum: 1, maximum: 200, multipleOf: 1 }>;\n      offset?: VRefine<number, { minimum: 0, multipleOf: 1 }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "QueryTGET3570308899",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  state?: ((\"pending\") | (\"ready\") | (\"sent\"));\n  deliveryStatus?: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"));\n  limit?: VRefine<number, {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  }>;\n  offset?: VRefine<number, {\n    minimum: 0;\n    multipleOf: 1\n  }>\n}",
+          "properties": [
+            {
+              "name": "state",
+              "nameDeclaration": "state",
+              "text": "((\"pending\") | (\"ready\") | (\"sent\"))",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "((\"pending\") | (\"ready\") | (\"sent\"))"
+            },
+            {
+              "name": "deliveryStatus",
+              "nameDeclaration": "deliveryStatus",
+              "text": "((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"))",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"))"
+            },
+            {
+              "name": "limit",
+              "nameDeclaration": "limit",
+              "text": "VRefine<number, {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(number with {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  })"
+            },
+            {
+              "name": "offset",
+              "nameDeclaration": "offset",
+              "text": "VRefine<number, {\n    minimum: 0;\n    multipleOf: 1\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(number with {\n    minimum: 0;\n    multipleOf: 1\n  })"
+            }
+          ],
+          "numericProperties": [
+            "limit",
+            "offset"
+          ],
+          "booleanProperties": [],
+          "typeboxSchema": "{ state?: ((\"pending\") | (\"ready\") | (\"sent\")), deliveryStatus?: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\")), limit?: (number with {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  }), offset?: (number with {\n    minimum: 0;\n    multipleOf: 1\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET75641126",
+          "status": 200,
+          "contentType": "json",
+          "body": "EmailPageViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTGET75641126",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  emails: Array<{\n    id: string;\n    subject: string;\n    from: {\n      address: VRefine<string, {\n        format: \"email\"\n      }>;\n      name?: VRefine<string, {\n        maxLength: 200\n      }>\n    };\n    to: Array<{\n      address: VRefine<string, {\n        format: \"email\"\n      }>;\n      name?: VRefine<string, {\n        maxLength: 200\n      }>\n    }>;\n    state: ((\"pending\") | (\"ready\") | (\"sent\"));\n    deliveryStatus: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"));\n    attempts: number;\n    lastError: ((string) | (null));\n    createdAt: string;\n    sentAt: ((string) | (null))\n  }>;\n  total: number;\n  limit: number;\n  offset: number\n}",
+            "properties": [
+              {
+                "name": "emails",
+                "nameDeclaration": "emails",
+                "text": "Array<{\n    id: string;\n    subject: string;\n    from: {\n      address: VRefine<string, {\n        format: \"email\"\n      }>;\n      name?: VRefine<string, {\n        maxLength: 200\n      }>\n    };\n    to: Array<{\n      address: VRefine<string, {\n        format: \"email\"\n      }>;\n      name?: VRefine<string, {\n        maxLength: 200\n      }>\n    }>;\n    state: ((\"pending\") | (\"ready\") | (\"sent\"));\n    deliveryStatus: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"));\n    attempts: number;\n    lastError: ((string) | (null));\n    createdAt: string;\n    sentAt: ((string) | (null))\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, subject: string, from: { address: (string with {\n        format: \"email\"\n      }), name?: (string with {\n        maxLength: 200\n      }) }, to: Array<{ address: (string with {\n        format: \"email\"\n      }), name?: (string with {\n        maxLength: 200\n      }) }>, state: ((\"pending\") | (\"ready\") | (\"sent\")), deliveryStatus: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\")), attempts: number, lastError: ((string) | (null)), createdAt: string, sentAt: ((string) | (null)) }>"
+              },
+              {
+                "name": "total",
+                "nameDeclaration": "total",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "limit",
+                "nameDeclaration": "limit",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "offset",
+                "nameDeclaration": "offset",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              }
+            ],
+            "numericProperties": [
+              "total",
+              "limit",
+              "offset"
+            ],
+            "booleanProperties": [],
+            "typeboxSchema": "{ emails: Array<{ id: string, subject: string, from: { address: (string with {\n        format: \"email\"\n      }), name?: (string with {\n        maxLength: 200\n      }) }, to: Array<{ address: (string with {\n        format: \"email\"\n      }), name?: (string with {\n        maxLength: 200\n      }) }>, state: ((\"pending\") | (\"ready\") | (\"sent\")), deliveryStatus: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\")), attempts: number, lastError: ((string) | (null)), createdAt: string, sentAt: ((string) | (null)) }>, total: number, limit: number, offset: number }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2558280027
+  }
+}

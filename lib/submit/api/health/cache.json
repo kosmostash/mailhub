@@ -1,0 +1,72 @@
+{
+  "hash": 60470571,
+  "params": {
+    "id": "ParamsT3470402323",
+    "schema": [],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT3470402323",
+      "parameters": [],
+      "comments": [],
+      "text": "{}",
+      "properties": [],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{  }"
+    }
+  },
+  "methods": [
+    "GET"
+  ],
+  "typeDeclarations": [
+    {
+      "typeAliasDeclaration": {
+        "name": "HealthViewT"
+      },
+      "text": "type HealthViewT = {\n  status: \"ok\";\n  storage: \"ok\";\n};"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET458777689",
+          "status": 200,
+          "contentType": "json",
+          "body": "HealthViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTGET458777689",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  status: \"ok\";\n  storage: \"ok\"\n}",
+            "properties": [
+              {
+                "name": "status",
+                "nameDeclaration": "status",
+                "text": "\"ok\"",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "\"ok\""
+              },
+              {
+                "name": "storage",
+                "nameDeclaration": "storage",
+                "text": "\"ok\"",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "\"ok\""
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ status: \"ok\", storage: \"ok\" }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {}
+}

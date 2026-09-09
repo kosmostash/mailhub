@@ -1,0 +1,111 @@
+{
+  "hash": 3187180828,
+  "params": {
+    "id": "ParamsT176132705",
+    "schema": [
+      {
+        "type": "param",
+        "kind": "required",
+        "name": "id",
+        "const": "id"
+      }
+    ],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT176132705",
+      "parameters": [],
+      "comments": [],
+      "text": "{\n  \"id\": VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
+      "properties": [
+        {
+          "name": "id",
+          "nameDeclaration": "\"id\"",
+          "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+          "optional": false,
+          "readonly": false,
+          "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+        }
+      ],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{ \"id\": (string with {\n    format: \"uuid\"\n  }) }"
+    }
+  },
+  "methods": [
+    "POST"
+  ],
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "AdminSummaryT",
+        "path": "~/types/views"
+      },
+      "text": "import type { AdminSummaryT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST100001437",
+        "text": "{ targetId: VRefine<string, { format: \"uuid\" }> }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST100001437",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  targetId: VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
+          "properties": [
+            {
+              "name": "targetId",
+              "nameDeclaration": "targetId",
+              "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ targetId: (string with {\n    format: \"uuid\"\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST69354645",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ admins: Array<AdminSummaryT> }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPOST69354645",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  admins: Array<{\n    id: string;\n    email: string;\n    disabled: boolean;\n    operators: number;\n    providers: number;\n    collections: number;\n    pending: number;\n    lastActivityAt: ((string) | (null));\n    deletable: boolean\n  }>\n}",
+            "properties": [
+              {
+                "name": "admins",
+                "nameDeclaration": "admins",
+                "text": "Array<{\n    id: string;\n    email: string;\n    disabled: boolean;\n    operators: number;\n    providers: number;\n    collections: number;\n    pending: number;\n    lastActivityAt: ((string) | (null));\n    deletable: boolean\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, email: string, disabled: boolean, operators: number, providers: number, collections: number, pending: number, lastActivityAt: ((string) | (null)), deletable: boolean }>"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ admins: Array<{ id: string, email: string, disabled: boolean, operators: number, providers: number, collections: number, pending: number, lastActivityAt: ((string) | (null)), deletable: boolean }> }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2558280027
+  }
+}

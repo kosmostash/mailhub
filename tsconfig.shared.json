@@ -1,0 +1,31 @@
+{
+  "//": [
+    "The shared root code - db/, domain/, workers/, tests/ - which every source",
+    "folder imports through `@/` but which no folder's own tsconfig owns.",
+    "`kosmo typecheck` covers src/<folder>/ per folder; this covers the rest.",
+    "Settings mirror lib/tsconfig.json, minus the JSX that only pages need."
+  ],
+  "include": ["db/", "domain/", "workers/", "tests/", "scripts/", "lib/env.d.ts"],
+  "compilerOptions": {
+    "types": ["@types/node"],
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "target": "ESNext",
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "useUnknownInCatchVariables": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}

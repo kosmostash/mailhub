@@ -1,0 +1,162 @@
+{
+  "hash": 3821402368,
+  "params": {
+    "id": "ParamsT3661605060",
+    "schema": [],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT3661605060",
+      "parameters": [],
+      "comments": [],
+      "text": "{}",
+      "properties": [],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{  }"
+    }
+  },
+  "methods": [
+    "POST",
+    "PUT"
+  ],
+  "typeDeclarations": [],
+  "validationDefinitions": [
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST4227977922",
+        "text": "{ email: VRefine<string, { format: \"email\", maxLength: 320 }> }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST4227977922",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  email: VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>\n}",
+          "properties": [
+            {
+              "name": "email",
+              "nameDeclaration": "email",
+              "text": "VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"email\";\n    maxLength: 320\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ email: (string with {\n    format: \"email\";\n    maxLength: 320\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST1423744252",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ sentTo: string; expiresAt: string; via: string }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPOST1423744252",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  sentTo: string;\n  expiresAt: string;\n  via: string\n}",
+            "properties": [
+              {
+                "name": "sentTo",
+                "nameDeclaration": "sentTo",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "expiresAt",
+                "nameDeclaration": "expiresAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "via",
+                "nameDeclaration": "via",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ sentTo: string, expiresAt: string, via: string }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "PUT",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPUT4227977922",
+        "text": "{ code: VRefine<string, { minLength: 1, maxLength: 64 }> }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPUT4227977922",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  code: VRefine<string, {\n    minLength: 1;\n    maxLength: 64\n  }>\n}",
+          "properties": [
+            {
+              "name": "code",
+              "nameDeclaration": "code",
+              "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 64\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 64\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ code: (string with {\n    minLength: 1;\n    maxLength: 64\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPUT508209004",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ email: string }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPUT508209004",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  email: string\n}",
+            "properties": [
+              {
+                "name": "email",
+                "nameDeclaration": "email",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ email: string }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {}
+}

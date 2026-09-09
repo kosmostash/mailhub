@@ -1,0 +1,93 @@
+{
+  "hash": 2298020828,
+  "params": {
+    "id": "ParamsT3007113253",
+    "schema": [],
+    "resolvedType": {
+      "kind": "TypeLiteral",
+      "name": "ParamsT3007113253",
+      "parameters": [],
+      "comments": [],
+      "text": "{}",
+      "properties": [],
+      "numericProperties": [],
+      "booleanProperties": [],
+      "typeboxSchema": "{  }"
+    }
+  },
+  "methods": [
+    "POST"
+  ],
+  "typeDeclarations": [],
+  "validationDefinitions": [
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST2742711461",
+        "text": "{\n      emailId: VRefine<string, { format: \"uuid\" }>;\n      testAddressId: VRefine<string, { format: \"uuid\" }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST2742711461",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  emailId: VRefine<string, {\n    format: \"uuid\"\n  }>;\n  testAddressId: VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
+          "properties": [
+            {
+              "name": "emailId",
+              "nameDeclaration": "emailId",
+              "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+            },
+            {
+              "name": "testAddressId",
+              "nameDeclaration": "testAddressId",
+              "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ emailId: (string with {\n    format: \"uuid\"\n  }), testAddressId: (string with {\n    format: \"uuid\"\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST591020132",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ sentTo: string }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPOST591020132",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  sentTo: string\n}",
+            "properties": [
+              {
+                "name": "sentTo",
+                "nameDeclaration": "sentTo",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ sentTo: string }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {}
+}
