@@ -74,15 +74,6 @@ export type SubmitEmailPayloadT = {
   html?: string;
 };
 
-/** One normalized delivery event (§3.4). */
-export type DeliveryEventViewT = {
-  /** MailHub's email id, or ... */
-  emailId?: string;
-  /** ... the provider's own message id. One of the two is required. */
-  messageId?: string;
-  status: "sent" | "delivered" | "bounced";
-};
-
 /** The structured error body every endpoint answers failures with (§6). */
 export type ErrorViewT = {
   error: string;

@@ -90,12 +90,15 @@ export type CollectionCardT = {
   providerId: string | null;
   providerName: string | null;
   owner: AccountViewT;
+  /** The admin whose subtree this sits in - null for anyone but the superadmin. */
+  admin: AccountViewT | null;
   counters: CollectionCountersT;
 };
 
 export const collectionCard = (input: {
   collection: CollectionT;
   owner: UserT;
+  admin: UserT | null;
   providerName: string | null;
   counters: CollectionCountersT;
 }): CollectionCardT => ({
@@ -105,6 +108,7 @@ export const collectionCard = (input: {
   providerId: input.collection.providerId,
   providerName: input.providerName,
   owner: accountView(input.owner),
+  admin: input.admin ? accountView(input.admin) : null,
   counters: input.counters,
 });
 

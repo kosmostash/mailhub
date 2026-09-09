@@ -4,7 +4,7 @@ import { type EmailRow, toEmail } from "@/db/rows";
 import * as accounts from "./accounts";
 import * as activity from "./activity";
 import { now } from "./clock";
-import { conflict, invalid, notFound } from "./errors";
+import { invalid, notFound } from "./errors";
 import { newId } from "./ids";
 import type {
   ActorT,
@@ -285,6 +285,18 @@ export const markFailed = (emailId: string, error: string): void => {
 };
 
 /**
+ * Record why an email could not even be attempted - no provider, a collection
+ * pulled out from under it - without spending one of its three attempts. The
+ * attempt cap is for a provider that keeps refusing, not for a configuration
+ * that is not there yet.
+ */
+export const markError = (emailId: string, error: string): void => {
+  db()
+    .prepare("UPDATE emails SET last_error = ? WHERE id = ?")
+    .run(error.slice(0, 2000), emailId);
+};
+
+/**
  * The background sender's batch (§4.1): `ready` emails whose collection has a
  * provider, oldest first, skipping anything in a suspended subtree and
  * anything that has exhausted its attempts.
@@ -342,14 +354,4 @@ export const applyDeliveryEvents = (events: Array<DeliveryEventT>): number => {
   }
 
   return matched;
-};
-
-/** Guard for actions that only make sense on a `ready` email. */
-export const assertReady = (email: EmailT): void => {
-  if (email.state === "pending") {
-    throw conflict("This email is still awaiting review", "not_approved");
-  }
-  if (email.state === "sent") {
-    throw conflict("This email has already been sent", "already_sent");
-  }
 };

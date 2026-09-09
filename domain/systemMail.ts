@@ -77,13 +77,13 @@ const recentCount = (recipient: string, userId: string | null): number => {
   ).toISOString();
 
   const { n } = db()
-    .prepare<[string, string, string | null, string], { n: number }>(
+    .prepare<[string, string, string | null], { n: number }>(
       `SELECT COUNT(*) AS n FROM system_emails
         WHERE created_at >= ?
           AND (recipient = ? OR (user_id IS NOT NULL AND user_id = ?))
-          AND purpose LIKE ?`,
+          AND purpose IN ('email_change_code', 'password_change_code')`,
     )
-    .get(since, recipient, userId, "%_code")!;
+    .get(since, recipient, userId)!;
 
   return n;
 };

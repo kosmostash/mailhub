@@ -164,6 +164,16 @@ const CreateCollection = ({ choices }: { choices: DashboardT["providerChoices"] 
   );
 };
 
+/** Cards under the admin whose subtree they sit in, admins in name order. */
+const groupByAdmin = (cards: Array<CardT>): Map<string, Array<CardT>> => {
+  const groups = new Map<string, Array<CardT>>();
+  for (const card of cards) {
+    const label = card.admin?.email ?? "no admin";
+    groups.set(label, [...(groups.get(label) ?? []), card]);
+  }
+  return new Map([...groups].sort(([a], [b]) => a.localeCompare(b)));
+};
+
 export default function DashboardPage() {
   const session = useSession();
   const actor = session.data?.actor;
@@ -200,6 +210,21 @@ export default function DashboardPage() {
             ? "Create one, then point a project at its id."
             : "Your operators have not created any."}
         </Empty>
+      ) : actor?.identity.role === "superadmin" ? (
+        // Only the superadmin sees across admins, so only there does grouping
+        // mean anything - this is the drill-down §5.8 asks for.
+        <div className="stack">
+          {[...groupByAdmin(cards)].map(([label, group]) => (
+            <section key={label} className="stack">
+              <h2 className="muted">{label}</h2>
+              <div className="grid">
+                {group.map((card) => (
+                  <CollectionCard key={card.id} card={card} showOwner />
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
       ) : (
         <div className="grid">
           {cards.map((card) => (

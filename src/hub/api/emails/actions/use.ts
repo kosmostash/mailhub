@@ -1,5 +1,4 @@
 import { forbidden } from "@/domain/errors";
-import type { UserT } from "@/domain/types";
 
 import { use } from "_/api";
 
@@ -9,25 +8,22 @@ import { use } from "_/api";
  * The gate sits on the whole subtree rather than in each handler: an admin
  * reading an email is fine, an admin *acting* on it in their own identity is
  * not - they impersonate first. Because it cascades, every action added below
- * inherits the rule instead of restating it, and `UseT` hands each handler the
- * acting operator already typed.
+ * inherits the rule instead of restating it.
+ *
+ * It adds nothing to the context: the handlers pass the whole actor down to the
+ * domain, which needs the impersonator too in order to mark the trail (§2.2).
  */
-export type UseT = {
-  operator: UserT;
-};
+export type UseT = {};
 
 export default [
   use<UseT>(async function requireOperatorIdentity(ctx, next) {
-    const { identity } = ctx.get("actor");
-
-    if (identity.role !== "operator") {
+    if (ctx.get("actor").identity.role !== "operator") {
       throw forbidden(
         "Approving and sending are an operator's actions - impersonate one to act",
         "wrong_role",
       );
     }
 
-    ctx.set("operator", identity);
     return next();
   }),
 ];

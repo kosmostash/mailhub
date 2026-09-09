@@ -20,6 +20,11 @@ export type ResponseTPOST3325353673 = {
     email: string;
     role: (("superadmin") | ("admin") | ("operator"))
   };
+  admin: (({
+    id: string;
+    email: string;
+    role: (("superadmin") | ("admin") | ("operator"))
+  }) | (null));
   counters: {
     total: number;
     pending: number;

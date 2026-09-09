@@ -29,10 +29,20 @@ export const cardsFor = (actor: ActorT): Array<CollectionCardT> => {
   const names = providerNames(owned.map(({ collection }) => collection));
   const counters = collections.counters(owned.map(({ collection }) => collection.id));
 
+  // Only the superadmin sees across admins, so only the superadmin needs to
+  // know which one a card belongs to - and it is resolved once per admin.
+  const admins = new Map<string, UserT | undefined>();
+  const adminOf = (owner: UserT): UserT | null => {
+    if (actor.identity.role !== "superadmin" || !owner.adminId) return null;
+    if (!admins.has(owner.adminId)) admins.set(owner.adminId, accounts.findById(owner.adminId));
+    return admins.get(owner.adminId) ?? null;
+  };
+
   return owned.map(({ collection, owner }) =>
     collectionCard({
       collection,
       owner,
+      admin: adminOf(owner),
       providerName: collection.providerId
         ? (names.get(collection.providerId) ?? null)
         : null,
@@ -50,6 +60,7 @@ export const cardFor = (collection: CollectionT): CollectionCardT => {
   return collectionCard({
     collection,
     owner,
+    admin: owner.adminId ? (accounts.findById(owner.adminId) ?? null) : null,
     providerName: provider?.name ?? null,
     counters: collections.counters([collection.id]).get(collection.id)!,
   });

@@ -15,6 +15,11 @@ export type ResponseTGET3126483566 = {
     email: string;
     role: (("superadmin") | ("admin") | ("operator"))
   };
+  admin: (({
+    id: string;
+    email: string;
+    role: (("superadmin") | ("admin") | ("operator"))
+  }) | (null));
   counters: {
     total: number;
     pending: number;
@@ -45,6 +50,11 @@ export type ResponseTPUT3126483566 = {
     email: string;
     role: (("superadmin") | ("admin") | ("operator"))
   };
+  admin: (({
+    id: string;
+    email: string;
+    role: (("superadmin") | ("admin") | ("operator"))
+  }) | (null));
   counters: {
     total: number;
     pending: number;

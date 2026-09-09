@@ -127,10 +127,11 @@ const ProviderForm = ({
 
   const payload = () => {
     const cleaned: ConfigT = { ...config };
-    if (existing && !cleaned.pass) delete cleaned.pass;
-    for (const key of ["user", "pass"]) {
-      if (cleaned[key] === "") delete cleaned[key];
-    }
+    // An update merges over what is stored, so an omitted key means
+    // "unchanged": that is how an empty password field keeps the stored one.
+    // Every other key is sent as typed - including an emptied username, which
+    // is how auth gets removed.
+    if (!cleaned.pass) delete cleaned.pass;
     return { name, type, config: cleaned };
   };
 

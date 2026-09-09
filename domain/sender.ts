@@ -119,7 +119,7 @@ export const drainOnce = async (): Promise<{ attempted: number; sent: number }> 
     } catch (error) {
       // A missing provider is not a delivery attempt: record it and move on
       // without burning one of the email's three tries.
-      emails.markFailed(
+      emails.markError(
         current.id,
         error instanceof Error ? error.message : String(error),
       );

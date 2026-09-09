@@ -11,6 +11,11 @@ export type ResponseTGET861866862 = {
       email: string;
       role: (("superadmin") | ("admin") | ("operator"))
     };
+    admin: (({
+      id: string;
+      email: string;
+      role: (("superadmin") | ("admin") | ("operator"))
+    }) | (null));
     counters: {
       total: number;
       pending: number;

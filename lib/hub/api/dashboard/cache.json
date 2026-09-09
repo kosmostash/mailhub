@@ -55,15 +55,15 @@
             "name": "ResponseTGET861866862",
             "parameters": [],
             "comments": [],
-            "text": "{\n  collections: Array<{\n    id: string;\n    name: string;\n    scheduleMode: ((\"after_review\") | (\"immediate\"));\n    providerId: ((string) | (null));\n    providerName: ((string) | (null));\n    owner: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    counters: {\n      total: number;\n      pending: number;\n      ready: number;\n      sent: number;\n      delivered: number;\n      bounced: number\n    }\n  }>;\n  providerChoices: Array<{\n    id: string;\n    name: string;\n    type: string\n  }>\n}",
+            "text": "{\n  collections: Array<{\n    id: string;\n    name: string;\n    scheduleMode: ((\"after_review\") | (\"immediate\"));\n    providerId: ((string) | (null));\n    providerName: ((string) | (null));\n    owner: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    admin: (({\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    }) | (null));\n    counters: {\n      total: number;\n      pending: number;\n      ready: number;\n      sent: number;\n      delivered: number;\n      bounced: number\n    }\n  }>;\n  providerChoices: Array<{\n    id: string;\n    name: string;\n    type: string\n  }>\n}",
             "properties": [
               {
                 "name": "collections",
                 "nameDeclaration": "collections",
-                "text": "Array<{\n    id: string;\n    name: string;\n    scheduleMode: ((\"after_review\") | (\"immediate\"));\n    providerId: ((string) | (null));\n    providerName: ((string) | (null));\n    owner: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    counters: {\n      total: number;\n      pending: number;\n      ready: number;\n      sent: number;\n      delivered: number;\n      bounced: number\n    }\n  }>",
+                "text": "Array<{\n    id: string;\n    name: string;\n    scheduleMode: ((\"after_review\") | (\"immediate\"));\n    providerId: ((string) | (null));\n    providerName: ((string) | (null));\n    owner: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    admin: (({\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    }) | (null));\n    counters: {\n      total: number;\n      pending: number;\n      ready: number;\n      sent: number;\n      delivered: number;\n      bounced: number\n    }\n  }>",
                 "optional": false,
                 "readonly": false,
-                "typeboxSchema": "Array<{ id: string, name: string, scheduleMode: ((\"after_review\") | (\"immediate\")), providerId: ((string) | (null)), providerName: ((string) | (null)), owner: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, counters: { total: number, pending: number, ready: number, sent: number, delivered: number, bounced: number } }>"
+                "typeboxSchema": "Array<{ id: string, name: string, scheduleMode: ((\"after_review\") | (\"immediate\")), providerId: ((string) | (null)), providerName: ((string) | (null)), owner: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, admin: (({ id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }) | (null)), counters: { total: number, pending: number, ready: number, sent: number, delivered: number, bounced: number } }>"
               },
               {
                 "name": "providerChoices",
@@ -76,13 +76,13 @@
             ],
             "numericProperties": [],
             "booleanProperties": [],
-            "typeboxSchema": "{ collections: Array<{ id: string, name: string, scheduleMode: ((\"after_review\") | (\"immediate\")), providerId: ((string) | (null)), providerName: ((string) | (null)), owner: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, counters: { total: number, pending: number, ready: number, sent: number, delivered: number, bounced: number } }>, providerChoices: Array<{ id: string, name: string, type: string }> }"
+            "typeboxSchema": "{ collections: Array<{ id: string, name: string, scheduleMode: ((\"after_review\") | (\"immediate\")), providerId: ((string) | (null)), providerName: ((string) | (null)), owner: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, admin: (({ id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }) | (null)), counters: { total: number, pending: number, ready: number, sent: number, delivered: number, bounced: number } }>, providerChoices: Array<{ id: string, name: string, type: string }> }"
           }
         }
       ]
     }
   ],
   "referencedFiles": {
-    "src/hub/types/views.ts": 2801502671
+    "src/hub/types/views.ts": 2558280027
   }
 }

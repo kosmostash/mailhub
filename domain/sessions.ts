@@ -55,8 +55,6 @@ export const revoke = (sessionId: string): void => {
   db().prepare("DELETE FROM sessions WHERE id = ?").run(sessionId);
 };
 
-export const revokeByToken = (token: string): void => revoke(tokenId(token));
-
 /**
  * Drop every session belonging to an account, and every session currently
  * impersonating it - suspending an operator must also eject the admin who is

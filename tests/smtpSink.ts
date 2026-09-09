@@ -13,12 +13,18 @@ export type SinkT = {
   messages: Array<{ from: string; to: Array<string>; data: string }>;
   /** Make the next N deliveries fail at DATA, to exercise the retry policy. */
   failNext: (count: number) => void;
+  /**
+   * Run something the moment a message is accepted - the seam a test uses to
+   * change the world underneath a sender that is mid-batch.
+   */
+  onMessage: (fn: () => void) => void;
   close: () => Promise<void>;
 };
 
 export const startSmtpSink = async (): Promise<SinkT> => {
   const messages: SinkT["messages"] = [];
   let failures = 0;
+  let hook: (() => void) | undefined;
 
   const server = new SMTPServer({
     authOptional: true,
@@ -37,6 +43,7 @@ export const startSmtpSink = async (): Promise<SinkT> => {
           to: session.envelope.rcptTo.map(({ address }) => address),
           data: Buffer.concat(chunks).toString("utf8"),
         });
+        hook?.();
         callback();
       });
     },
@@ -56,6 +63,9 @@ export const startSmtpSink = async (): Promise<SinkT> => {
     messages,
     failNext: (count) => {
       failures = count;
+    },
+    onMessage: (fn) => {
+      hook = fn;
     },
     close: () =>
       new Promise<void>((resolve) => {

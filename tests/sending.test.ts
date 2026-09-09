@@ -297,6 +297,53 @@ describe("delivery tracking (§3.4, §4.3)", () => {
     expect(Object.keys(choices[0]!)).not.toContain("config");
   });
 
+  it("keeps a stored secret when an update omits it (§5.6)", () => {
+    const created = providers.create(world.adminOneActor, {
+      name: "Authenticated",
+      type: "smtp",
+      config: { host: "mail.test", port: 587, secure: false, user: "bot", pass: "s3cret" },
+    });
+
+    // What the admin's edit form sends back after a rename: the masked
+    // password was never a real value, so it is simply not included.
+    const renamed = providers.update(world.adminOneActor, created.id, {
+      name: "Renamed",
+      config: { host: "mail.test", port: 587, secure: false, user: "bot" },
+    });
+
+    expect(renamed.name).toBe("Renamed");
+    expect(renamed.config.pass).toBe("s3cret");
+    // ... and the redacted view never shows it.
+    expect(providers.redacted(renamed).config.pass).not.toBe("s3cret");
+  });
+
+  it("does not spend an attempt when there was no provider to try (§4.1)", async () => {
+    const collection = makeCollection(world.operatorActor, {
+      name: "loses its provider mid-batch",
+      scheduleMode: "immediate",
+      providerId: world.provider.id,
+    });
+    const first = emails.submit(collection, submission("goes out"), "http");
+    const second = emails.submit(collection, submission("caught by the race"), "http");
+
+    // The operator clears the provider while the sender is working through the
+    // batch it already selected. The second email is still `ready` and still in
+    // hand, but there is now nothing to send it through.
+    sink.onMessage(() => {
+      collections.update(world.operatorActor, collection.id, { providerId: null });
+    });
+
+    await sender.drainOnce();
+
+    expect(emails.findById(first.id)!.state).toBe("sent");
+
+    const held = emails.findById(second.id)!;
+    expect(held.state).toBe("ready");
+    // Not a delivery attempt: the cap is for a provider that keeps refusing.
+    expect(held.attempts).toBe(0);
+    expect(held.lastError).toMatch(/no provider/i);
+  });
+
   it("refuses a provider that belongs to another admin", async () => {
     const theirs = providers.create(world.adminTwoActor, {
       name: "Theirs",

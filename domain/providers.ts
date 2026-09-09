@@ -137,12 +137,24 @@ export const update = (
 
   const name = input.name === undefined ? existing.name : assertName(input.name);
   const type = input.type === undefined ? existing.type : assertType(input.type);
-  // Changing the type re-validates the configuration against the new type, so
-  // a half-migrated provider can never be stored.
-  const config =
-    input.config === undefined && type === existing.type
+
+  /**
+   * An update merges over what is stored, rather than replacing it.
+   *
+   * That is what lets an edit form show a masked password and leave the field
+   * empty to keep it: omitting a key means "unchanged", and the secret never
+   * has to travel back to the browser to survive a rename. Changing the *type*
+   * is the exception - the old configuration means nothing under a new type,
+   * so it is replaced and re-validated wholesale.
+   */
+  const merged =
+    input.config === undefined
       ? existing.config
-      : factoryFor(type).validateConfig(input.config ?? existing.config);
+      : type === existing.type
+        ? { ...existing.config, ...input.config }
+        : input.config;
+
+  const config = factoryFor(type).validateConfig(merged);
 
   if (
     name !== existing.name &&
