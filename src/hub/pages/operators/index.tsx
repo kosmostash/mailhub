@@ -4,8 +4,9 @@ import { useNavigate } from "react-router";
 import fetchClients from "_/fetch";
 
 import AccountManager from "~/components/AccountManager";
-import { ErrorNotice, Splash } from "~/components/ui";
-import { useStartImpersonation } from "~/hooks/session";
+import { PageSkeleton, errorMessage } from "~/components/domain";
+import { Alert, AlertDescription } from "~/components/ui/alert";
+import { useSession, useStartImpersonation } from "~/hooks/session";
 
 /**
  * The operators page (§5.7) - an admin's own operators.
@@ -15,19 +16,31 @@ import { useStartImpersonation } from "~/hooks/session";
  * and found something that needs doing in their identity.
  */
 export default function OperatorsPage() {
+  const session = useSession();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const impersonate = useStartImpersonation();
 
+  // Ending an impersonation takes this capability away while the page is still
+  // mounted; asking anyway would just earn a 403 on the way out.
+  const canManage = session.data?.actor?.capabilities.manageOperators === true;
+
   const operators = useQuery({
     queryKey: ["operators"],
     queryFn: () => fetchClients.operators.GET(),
+    enabled: canManage,
   });
 
   const refresh = () => queryClient.invalidateQueries();
 
-  if (operators.isPending) return <Splash />;
-  if (operators.error) return <ErrorNotice error={operators.error} />;
+  if (!canManage || operators.isPending) return <PageSkeleton />;
+  if (operators.error) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>{errorMessage(operators.error)}</AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <AccountManager
@@ -45,11 +58,8 @@ export default function OperatorsPage() {
           { label: "pending", value: operator.pending },
         ],
       }))}
-      disableWarning={(account) =>
-        `Disable ${account.email}?\n\n` +
-        "Their sessions are revoked immediately, their collections stop accepting " +
-        "submissions (403), and their ready mail stops sending. Nothing is deleted, " +
-        "and re-enabling resumes everything where it stopped."
+      disableWarning={() =>
+        "Their sessions are revoked immediately, their collections stop accepting submissions (403), and their ready mail stops sending. Nothing is deleted, and re-enabling resumes everything where it stopped."
       }
       onCreate={(input) =>
         fetchClients.operators.POST([], { json: input }).then(refresh)

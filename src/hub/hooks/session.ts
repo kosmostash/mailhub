@@ -28,13 +28,21 @@ export const useSession = () =>
 
 /**
  * Everything the hub shows depends on who is acting, so a change of identity
- * clears the lot rather than trying to guess which queries survived it.
+ * clears the lot rather than guessing which queries survived it.
+ *
+ * `removeQueries`, not `invalidateQueries`: invalidating refetches immediately,
+ * before React has re-rendered with the new capabilities - so a page you can no
+ * longer see fires one last request and earns a 403 on its way out. Removing
+ * drops the data without refetching, and the re-render that follows decides
+ * what to ask for, with the new identity already in hand.
  */
 export const useIdentityChange = () => {
   const queryClient = useQueryClient();
   return (session: SessionT) => {
     queryClient.setQueryData(SESSION_KEY, session);
-    void queryClient.invalidateQueries();
+    queryClient.removeQueries({
+      predicate: (query) => query.queryKey[0] !== SESSION_KEY[0],
+    });
   };
 };
 

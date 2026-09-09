@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "@kosmojs/dev";
 
 export default defineConfig({
@@ -8,6 +9,10 @@ export default defineConfig({
     ssr: false,
     ssg: false,
     tanstack: { query: true },
+    viteConfig: {
+      // The React plugin reaches Vite through `stack`; anything else goes here.
+      plugins: [tailwindcss()],
+    },
   },
   backend: {
     stack: "hono",

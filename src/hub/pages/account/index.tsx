@@ -1,92 +1,151 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { InfoIcon, MailCheckIcon, PlusIcon, Trash2Icon, VenetianMaskIcon } from "lucide-react";
 import { useState } from "react";
 
 import fetchClients from "_/fetch";
 
+import { Empty, PageHeading, PageSkeleton, When, errorMessage } from "~/components/domain";
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { toast } from "~/components/ui/sonner";
 import {
-  Empty,
-  ErrorNotice,
-  Field,
-  Form,
-  Notice,
-  Panel,
-  Splash,
-  When,
-} from "~/components/ui";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 import { useSession } from "~/hooks/session";
 
 /**
  * The account page (§5.10).
  *
  * Both credential changes are two steps, and the page says out loud where the
- * code went and why - the address a code is sent to is what it proves, and
- * that is worth being explicit about rather than leaving to the user to infer.
+ * code went and why: the address a code is sent to is precisely what it proves,
+ * and that is worth stating rather than leaving the reader to infer.
  */
 
 const useAccount = () =>
   useQuery({ queryKey: ["account"], queryFn: () => fetchClients.account.GET() });
 
+/** The second step of both flows: enter the code that was emailed. */
+const ConfirmStep = ({
+  onConfirm,
+  pending,
+  error,
+}: {
+  onConfirm: (code: string) => void;
+  pending: boolean;
+  error: unknown;
+}) => {
+  const [code, setCode] = useState("");
+
+  return (
+    <form
+      className="flex flex-wrap items-end gap-2"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onConfirm(code);
+      }}
+    >
+      <div className="space-y-1.5">
+        <Label htmlFor="code">Confirmation code</Label>
+        <Input
+          id="code"
+          inputMode="numeric"
+          placeholder="000000"
+          value={code}
+          required
+          autoComplete="one-time-code"
+          className="tnum w-40 font-mono tracking-widest"
+          onChange={(event) => setCode(event.target.value)}
+        />
+      </div>
+      <Button type="submit" disabled={pending}>
+        {pending ? "Confirming…" : "Confirm"}
+      </Button>
+      {error ? (
+        <p className="text-destructive w-full text-sm">{errorMessage(error)}</p>
+      ) : null}
+    </form>
+  );
+};
+
 const ChangeEmail = ({ pending }: { pending: boolean }) => {
   const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
 
   const ask = useMutation({
     mutationFn: () => fetchClients["account/email"].POST([], { json: { email } }),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: ["account"] }),
+    onSuccess: (result) => {
+      toast.success(`Code sent to ${result.sentTo}`);
+      void queryClient.invalidateQueries({ queryKey: ["account"] });
+    },
   });
 
   const confirm = useMutation({
-    mutationFn: () => fetchClients["account/email"].PUT([], { json: { code } }),
-    onSuccess: () => {
-      setCode("");
+    mutationFn: (code: string) =>
+      fetchClients["account/email"].PUT([], { json: { code } }),
+    onSuccess: (result) => {
       setEmail("");
+      toast.success(`Your address is now ${result.email}`);
       void queryClient.invalidateQueries();
     },
   });
 
   return (
-    <Panel title="Change your email">
-      <div className="body stack">
-        <Form className="stack" onSubmit={() => ask.mutate()}>
-          <Field label="New address">
-            <input
+    <Card>
+      <CardHeader>
+        <CardTitle>Change your email</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <form
+          className="flex flex-wrap items-end gap-2"
+          onSubmit={(event) => {
+            event.preventDefault();
+            ask.mutate();
+          }}
+        >
+          <div className="min-w-56 flex-1 space-y-1.5">
+            <Label htmlFor="new-email">New address</Label>
+            <Input
+              id="new-email"
               type="email"
               value={email}
               required
               onChange={(event) => setEmail(event.target.value)}
             />
-          </Field>
-          <ErrorNotice error={ask.error} />
-          <div className="row">
-            <button type="submit" disabled={ask.isPending}>
-              {ask.isPending ? "Sending…" : "Send a confirmation code"}
-            </button>
-            <span className="faint">
-              The code goes to the <strong>new</strong> address - that is what proves you
-              control it. Until you enter it, your account keeps its current address.
-            </span>
           </div>
-        </Form>
+          <Button variant="outline" type="submit" disabled={ask.isPending}>
+            {ask.isPending ? "Sending…" : "Send a code"}
+          </Button>
+        </form>
+
+        <p className="text-muted-foreground text-xs">
+          The code goes to the <strong>new</strong> address — that is what proves you
+          control it. Until you enter it, your account keeps its current address.
+        </p>
+
+        {ask.error ? (
+          <Alert variant="destructive">
+            <AlertDescription>{errorMessage(ask.error)}</AlertDescription>
+          </Alert>
+        ) : null}
 
         {pending ? (
-          <Form className="row" onSubmit={() => confirm.mutate()}>
-            <input
-              inputMode="numeric"
-              placeholder="6-digit code"
-              value={code}
-              required
-              onChange={(event) => setCode(event.target.value)}
-              style={{ width: "12rem" }}
-            />
-            <button type="submit" className="primary" disabled={confirm.isPending}>
-              Confirm the change
-            </button>
-            <ErrorNotice error={confirm.error} />
-          </Form>
+          <ConfirmStep
+            onConfirm={(code) => confirm.mutate(code)}
+            pending={confirm.isPending}
+            error={confirm.error}
+          />
         ) : null}
-      </div>
-    </Panel>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -94,44 +153,60 @@ const ChangePassword = ({ pending }: { pending: boolean }) => {
   const queryClient = useQueryClient();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [code, setCode] = useState("");
-  const [done, setDone] = useState(false);
 
   const ask = useMutation({
     mutationFn: () =>
-      fetchClients["account/password"].POST([], { json: { currentPassword, newPassword } }),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: ["account"] }),
+      fetchClients["account/password"].POST([], {
+        json: { currentPassword, newPassword },
+      }),
+    onSuccess: (result) => {
+      toast.success(`Code sent to ${result.sentTo}`);
+      void queryClient.invalidateQueries({ queryKey: ["account"] });
+    },
   });
 
   const confirm = useMutation({
-    mutationFn: () => fetchClients["account/password"].PUT([], { json: { code } }),
+    mutationFn: (code: string) =>
+      fetchClients["account/password"].PUT([], { json: { code } }),
     onSuccess: () => {
-      setDone(true);
-      setCode("");
       setCurrentPassword("");
       setNewPassword("");
+      toast.success("Password changed", {
+        description: "Your other sessions were signed out.",
+      });
       void queryClient.invalidateQueries();
     },
   });
 
   return (
-    <Panel title="Change your password">
-      <div className="body stack">
-        {done ? <Notice kind="ok">Password changed. Other sessions were signed out.</Notice> : null}
-
-        <Form className="stack" onSubmit={() => ask.mutate()}>
-          <div className="form-grid">
-            <Field label="Current password">
-              <input
+    <Card>
+      <CardHeader>
+        <CardTitle>Change your password</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <form
+          className="space-y-4"
+          onSubmit={(event) => {
+            event.preventDefault();
+            ask.mutate();
+          }}
+        >
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="current-password">Current password</Label>
+              <Input
+                id="current-password"
                 type="password"
                 value={currentPassword}
                 required
                 autoComplete="current-password"
                 onChange={(event) => setCurrentPassword(event.target.value)}
               />
-            </Field>
-            <Field label="New password">
-              <input
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="new-password">New password</Label>
+              <Input
+                id="new-password"
                 type="password"
                 value={newPassword}
                 required
@@ -139,38 +214,34 @@ const ChangePassword = ({ pending }: { pending: boolean }) => {
                 autoComplete="new-password"
                 onChange={(event) => setNewPassword(event.target.value)}
               />
-            </Field>
+            </div>
           </div>
-          <ErrorNotice error={ask.error} />
-          <div className="row">
-            <button type="submit" disabled={ask.isPending}>
-              {ask.isPending ? "Sending…" : "Send a confirmation code"}
-            </button>
-            <span className="faint">
-              The code goes to the address <strong>currently</strong> on your account - that
-              is what proves the request is yours.
-            </span>
-          </div>
-        </Form>
+
+          <Button variant="outline" type="submit" disabled={ask.isPending}>
+            {ask.isPending ? "Sending…" : "Send a code"}
+          </Button>
+        </form>
+
+        <p className="text-muted-foreground text-xs">
+          The code goes to the address <strong>currently</strong> on your account — that
+          is what proves the request is yours.
+        </p>
+
+        {ask.error ? (
+          <Alert variant="destructive">
+            <AlertDescription>{errorMessage(ask.error)}</AlertDescription>
+          </Alert>
+        ) : null}
 
         {pending ? (
-          <Form className="row" onSubmit={() => confirm.mutate()}>
-            <input
-              inputMode="numeric"
-              placeholder="6-digit code"
-              value={code}
-              required
-              onChange={(event) => setCode(event.target.value)}
-              style={{ width: "12rem" }}
-            />
-            <button type="submit" className="primary" disabled={confirm.isPending}>
-              Confirm the change
-            </button>
-            <ErrorNotice error={confirm.error} />
-          </Form>
+          <ConfirmStep
+            onConfirm={(code) => confirm.mutate(code)}
+            pending={confirm.isPending}
+            error={confirm.error}
+          />
         ) : null}
-      </div>
-    </Panel>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -188,6 +259,7 @@ const TestAddresses = () => {
     onSuccess: () => {
       setAddress("");
       setLabel("");
+      toast.success("Test address added");
       void queryClient.invalidateQueries({ queryKey: ["account"] });
     },
   });
@@ -200,72 +272,100 @@ const TestAddresses = () => {
   const list = account.data?.testAddresses ?? [];
 
   return (
-    <Panel title="Test addresses">
-      <div className="body stack">
-        <p className="muted" style={{ margin: 0 }}>
+    <Card className="overflow-hidden">
+      <CardHeader>
+        <CardTitle>Test addresses</CardTitle>
+        <span className="text-muted-foreground text-xs">newest first</span>
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        <p className="text-muted-foreground text-sm">
           Where “Send to me” delivers a copy. They belong to this account rather than to
           any collection, so they stay put if your collections are ever reassigned.
         </p>
 
         {list.length === 0 ? (
-          <Empty title="None yet">Add one to enable “Send to me” on the email view.</Empty>
+          <Empty title="None yet">
+            Add one to enable “Send to me” on the email view.
+          </Empty>
         ) : (
-          <div className="table-scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th>Address</th>
-                  <th>Label</th>
-                  <th>Added</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
+          <div className="-mx-4 border-y">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Address</TableHead>
+                  <TableHead>Label</TableHead>
+                  <TableHead>Added</TableHead>
+                  <TableHead className="w-10" />
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {list.map((entry) => (
-                  <tr key={entry.id}>
-                    <td>{entry.address}</td>
-                    <td className="faint">{entry.label ?? "–"}</td>
-                    <td className="shrink faint">
+                  <TableRow key={entry.id}>
+                    <TableCell className="font-medium">{entry.address}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {entry.label ?? "—"}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground text-xs">
                       <When at={entry.createdAt} />
-                    </td>
-                    <td className="shrink">
-                      <button
-                        type="button"
-                        className="small quiet"
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label={`Remove ${entry.address}`}
                         onClick={() => remove.mutate(entry.id)}
                       >
-                        remove
-                      </button>
-                    </td>
-                  </tr>
+                        <Trash2Icon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         )}
 
-        <Form className="row" onSubmit={() => add.mutate()}>
-          <input
-            type="email"
-            placeholder="you@example.com"
-            value={address}
-            required
-            onChange={(event) => setAddress(event.target.value)}
-            style={{ width: "18rem" }}
-          />
-          <input
-            placeholder="label (optional)"
-            value={label}
-            onChange={(event) => setLabel(event.target.value)}
-            style={{ width: "12rem" }}
-          />
-          <button type="submit" disabled={add.isPending}>
+        <form
+          className="flex flex-wrap items-end gap-2"
+          onSubmit={(event) => {
+            event.preventDefault();
+            add.mutate();
+          }}
+        >
+          <div className="min-w-52 flex-1 space-y-1.5">
+            <Label htmlFor="test-address">Address</Label>
+            <Input
+              id="test-address"
+              type="email"
+              placeholder="you@example.com"
+              value={address}
+              required
+              onChange={(event) => setAddress(event.target.value)}
+            />
+          </div>
+          <div className="w-40 space-y-1.5">
+            <Label htmlFor="test-label">Label</Label>
+            <Input
+              id="test-label"
+              placeholder="optional"
+              value={label}
+              onChange={(event) => setLabel(event.target.value)}
+            />
+          </div>
+          <Button variant="outline" type="submit" disabled={add.isPending}>
+            <PlusIcon />
             Add
-          </button>
-        </Form>
-        <ErrorNotice error={add.error} />
-      </div>
-    </Panel>
+          </Button>
+        </form>
+
+        {add.error ? (
+          <Alert variant="destructive">
+            <AlertDescription>{errorMessage(add.error)}</AlertDescription>
+          </Alert>
+        ) : null}
+      </CardContent>
+    </Card>
   );
 };
 
@@ -273,8 +373,14 @@ export default function AccountPage() {
   const session = useSession();
   const account = useAccount();
 
-  if (account.isPending) return <Splash />;
-  if (account.error) return <ErrorNotice error={account.error} />;
+  if (account.isPending) return <PageSkeleton />;
+  if (account.error) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>{errorMessage(account.error)}</AlertDescription>
+      </Alert>
+    );
+  }
 
   const data = account.data;
   const impersonating = session.data?.actor?.impersonating === true;
@@ -282,30 +388,39 @@ export default function AccountPage() {
 
   return (
     <>
-      <div className="page-head">
-        <div>
-          <h1>Your account</h1>
-          <p>
-            {data.email} · {data.role}
-          </p>
-        </div>
-      </div>
+      <PageHeading
+        title="Your account"
+        description={
+          <span className="flex items-center gap-2">
+            {data.email} <Badge variant="neutral">{data.role}</Badge>
+          </span>
+        }
+      />
 
-      <div className="stack">
+      <div className="max-w-3xl space-y-4">
         {data.pendingChange ? (
-          <Notice kind="info">
-            A {data.pendingChange.purpose} change is waiting for its code. It was sent to{" "}
-            <strong>{data.pendingChange.sentTo}</strong> and expires{" "}
-            <When at={data.pendingChange.expiresAt} />.
-          </Notice>
+          <Alert variant="info">
+            <MailCheckIcon />
+            <AlertTitle>
+              A {data.pendingChange.purpose} change is waiting for its code
+            </AlertTitle>
+            <AlertDescription>
+              It was sent to <strong>{data.pendingChange.sentTo}</strong> and expires{" "}
+              <When at={data.pendingChange.expiresAt} />.
+            </AlertDescription>
+          </Alert>
         ) : null}
 
         {impersonating ? (
-          <Notice kind="info">
-            You are impersonating someone. Credential changes are self-service by
-            definition, so they apply to your own account only - end the impersonation
-            first if that is not what you meant.
-          </Notice>
+          <Alert variant="warning">
+            <VenetianMaskIcon />
+            <AlertTitle>You are impersonating someone</AlertTitle>
+            <AlertDescription>
+              Credential changes are self-service by definition, so they would apply to
+              your own account. End the impersonation first if that is not what you
+              meant.
+            </AlertDescription>
+          </Alert>
         ) : (
           <>
             <ChangeEmail pending={data.pendingChange?.purpose === "email"} />
@@ -313,7 +428,17 @@ export default function AccountPage() {
           </>
         )}
 
-        {isOperator ? <TestAddresses /> : null}
+        {isOperator ? (
+          <TestAddresses />
+        ) : (
+          <Alert>
+            <InfoIcon />
+            <AlertDescription>
+              Test addresses belong to operators. Test sending is a write action, so it
+              happens under impersonation, using that operator's own list.
+            </AlertDescription>
+          </Alert>
+        )}
       </div>
     </>
   );

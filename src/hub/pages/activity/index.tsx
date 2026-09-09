@@ -3,7 +3,26 @@ import { useState } from "react";
 
 import fetchClients, { type ResponseT } from "_/fetch";
 
-import { Empty, ErrorNotice, Splash, When } from "~/components/ui";
+import { Empty, PageHeading, PageSkeleton, When, errorMessage } from "~/components/domain";
+import { Alert, AlertDescription } from "~/components/ui/alert";
+import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
+import { Card } from "~/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 import { useSession } from "~/hooks/session";
 
 type EntryT = ResponseT["activity"]["GET"]["entries"][number];
@@ -55,17 +74,24 @@ const PHRASES: Record<string, string> = {
 };
 
 const Actor = ({ entry }: { entry: EntryT }) => {
-  if (entry.actorKind === "sender") return <em>the background sender</em>;
-  if (entry.actorKind === "smtp") return <em>the SMTP listener</em>;
+  if (entry.actorKind !== "user") {
+    return (
+      <Badge variant="neutral">
+        {entry.actorKind === "sender" ? "background sender" : "SMTP listener"}
+      </Badge>
+    );
+  }
 
   return (
-    <>
-      <strong>{entry.actorEmail}</strong>
+    <div className="flex flex-col">
+      <span className="font-medium">{entry.actorEmail}</span>
       {entry.impersonatorEmail ? (
         // Impersonation is an audited convenience, not a disguise (§2.2).
-        <span className="faint"> via impersonation by {entry.impersonatorEmail}</span>
+        <span className="text-pending text-xs">
+          via impersonation by {entry.impersonatorEmail}
+        </span>
       ) : null}
-    </>
+    </div>
   );
 };
 
@@ -91,132 +117,141 @@ export default function ActivityPage() {
       }),
   });
 
-  if (activity.isPending) return <Splash />;
-  if (activity.error) return <ErrorNotice error={activity.error} />;
+  if (activity.isPending) return <PageSkeleton />;
+  if (activity.error) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>{errorMessage(activity.error)}</AlertDescription>
+      </Alert>
+    );
+  }
 
   const { entries, total, operators, admins } = activity.data;
 
   return (
     <>
-      <div className="page-head">
-        <div>
-          <h1>Activity</h1>
-          <p>
-            {role === "operator"
-              ? "Everything you have done, newest first."
-              : "Every state-changing action in your scope, newest first. Entries are never rewritten - a reassigned object keeps the history of who acted on it."}
-          </p>
-        </div>
-      </div>
+      <PageHeading
+        title="Activity"
+        description={
+          role === "operator"
+            ? "Everything you have done, newest first."
+            : "Every state-changing action in your scope, newest first. Entries are never rewritten - a reassigned object keeps the history of who acted on it."
+        }
+        actions={
+          role !== "operator" ? (
+            <div className="flex flex-wrap gap-2">
+              {admins.length ? (
+                <Select
+                  value={adminId || "all"}
+                  onValueChange={(value) => {
+                    setAdminId(value === "all" ? "" : value);
+                    setOperatorId("");
+                    setOffset(0);
+                  }}
+                >
+                  <SelectTrigger size="sm" className="w-52">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Every admin</SelectItem>
+                    {admins.map((admin) => (
+                      <SelectItem key={admin.id} value={admin.id}>
+                        {admin.email}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              ) : null}
 
-      <div className="stack">
-        {role !== "operator" ? (
-          <div className="row">
-            {admins.length ? (
-              <select
-                value={adminId}
-                onChange={(event) => {
-                  setAdminId(event.target.value);
-                  setOperatorId("");
+              <Select
+                value={operatorId || "all"}
+                onValueChange={(value) => {
+                  setOperatorId(value === "all" ? "" : value);
                   setOffset(0);
                 }}
-                style={{ width: "auto" }}
               >
-                <option value="">every admin</option>
-                {admins.map((admin) => (
-                  <option key={admin.id} value={admin.id}>
-                    {admin.email}
-                  </option>
-                ))}
-              </select>
-            ) : null}
+                <SelectTrigger size="sm" className="w-52">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Every operator</SelectItem>
+                  {operators.map((operator) => (
+                    <SelectItem key={operator.id} value={operator.id}>
+                      {operator.email}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          ) : null
+        }
+      />
 
-            <select
-              value={operatorId}
-              onChange={(event) => {
-                setOperatorId(event.target.value);
-                setOffset(0);
-              }}
-              style={{ width: "auto" }}
-            >
-              <option value="">every operator</option>
-              {operators.map((operator) => (
-                <option key={operator.id} value={operator.id}>
-                  {operator.email}
-                </option>
-              ))}
-            </select>
-
-            <span className="faint">{total} entries</span>
-          </div>
-        ) : null}
-
+      <Card className="overflow-hidden">
         {entries.length === 0 ? (
           <Empty title="Nothing recorded yet" />
         ) : (
-          <section className="panel">
-            <div className="table-scroll">
-              <table>
-                <thead>
-                  <tr>
-                    <th>When</th>
-                    <th>Who</th>
-                    <th>What</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {entries.map((entry) => (
-                    <tr key={entry.id}>
-                      <td className="shrink faint">
-                        <When at={entry.createdAt} />
-                      </td>
-                      <td>
-                        <Actor entry={entry} />
-                      </td>
-                      <td>
-                        {PHRASES[entry.action] ?? entry.action}{" "}
-                        {entry.objectLabel ? <strong>{entry.objectLabel}</strong> : null}
-                        {entry.detail?.error ? (
-                          <div className="faint" style={{ color: "var(--danger)" }}>
-                            {String(entry.detail.error)}
-                          </div>
-                        ) : null}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-28">When</TableHead>
+                <TableHead className="w-72">Who</TableHead>
+                <TableHead>What</TableHead>
+              </TableRow>
+            </TableHeader>
 
-            {total > limit ? (
-              <div
-                className="row"
-                style={{ padding: "0.75rem 1rem", justifyContent: "space-between" }}
-              >
-                <button
-                  type="button"
-                  className="small"
-                  disabled={offset === 0}
-                  onClick={() => setOffset(Math.max(0, offset - limit))}
-                >
-                  ← newer
-                </button>
-                <span className="faint">
-                  {offset + 1}–{Math.min(offset + limit, total)} of {total}
-                </span>
-                <button
-                  type="button"
-                  className="small"
-                  disabled={offset + limit >= total}
-                  onClick={() => setOffset(offset + limit)}
-                >
-                  older →
-                </button>
-              </div>
-            ) : null}
-          </section>
+            <TableBody>
+              {entries.map((entry) => (
+                <TableRow key={entry.id}>
+                  <TableCell className="text-muted-foreground text-xs whitespace-nowrap">
+                    <When at={entry.createdAt} />
+                  </TableCell>
+                  <TableCell>
+                    <Actor entry={entry} />
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-muted-foreground">
+                      {PHRASES[entry.action] ?? entry.action}
+                    </span>{" "}
+                    {entry.objectLabel ? (
+                      <span className="font-medium">{entry.objectLabel}</span>
+                    ) : null}
+                    {entry.detail?.error ? (
+                      <div className="text-bounced text-xs">
+                        {String(entry.detail.error)}
+                      </div>
+                    ) : null}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         )}
-      </div>
+
+        {total > limit ? (
+          <div className="flex items-center justify-between border-t px-4 py-3">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={offset === 0}
+              onClick={() => setOffset(Math.max(0, offset - limit))}
+            >
+              &larr; Newer
+            </Button>
+            <span className="text-muted-foreground tnum text-xs">
+              {offset + 1}&ndash;{Math.min(offset + limit, total)} of {total}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={offset + limit >= total}
+              onClick={() => setOffset(offset + limit)}
+            >
+              Older &rarr;
+            </Button>
+          </div>
+        ) : null}
+      </Card>
     </>
   );
 }

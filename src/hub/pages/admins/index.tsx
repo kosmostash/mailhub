@@ -4,8 +4,9 @@ import { useNavigate } from "react-router";
 import fetchClients from "_/fetch";
 
 import AccountManager from "~/components/AccountManager";
-import { ErrorNotice, Splash } from "~/components/ui";
-import { useStartImpersonation } from "~/hooks/session";
+import { PageSkeleton, errorMessage } from "~/components/domain";
+import { Alert, AlertDescription } from "~/components/ui/alert";
+import { useSession, useStartImpersonation } from "~/hooks/session";
 
 /**
  * The admins page (§5.8) - the superadmin's landing view.
@@ -16,19 +17,31 @@ import { useStartImpersonation } from "~/hooks/session";
  * operators and providers rather than collections.
  */
 export default function AdminsPage() {
+  const session = useSession();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const impersonate = useStartImpersonation();
 
+  // Ending an impersonation takes this capability away while the page is still
+  // mounted; asking anyway would just earn a 403 on the way out.
+  const canManage = session.data?.actor?.capabilities.manageAdmins === true;
+
   const admins = useQuery({
     queryKey: ["admins"],
     queryFn: () => fetchClients.admins.GET(),
+    enabled: canManage,
   });
 
   const refresh = () => queryClient.invalidateQueries();
 
-  if (admins.isPending) return <Splash />;
-  if (admins.error) return <ErrorNotice error={admins.error} />;
+  if (!canManage || admins.isPending) return <PageSkeleton />;
+  if (admins.error) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>{errorMessage(admins.error)}</AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <AccountManager
@@ -48,12 +61,8 @@ export default function AdminsPage() {
           { label: "pending", value: admin.pending },
         ],
       }))}
-      disableWarning={(account) =>
-        `Disable ${account.email}?\n\n` +
-        "This covers their whole subtree: the admin's sessions and every one of " +
-        "their operators' are revoked at once, submissions to their collections are " +
-        "refused, and their mail stops sending. Delivery events for already-sent mail " +
-        "keep arriving, so history stays truthful."
+      disableWarning={() =>
+        "This covers their whole subtree: the admin's sessions and every one of their operators' are revoked at once, submissions to their collections are refused, and their mail stops sending. Delivery events for already-sent mail keep arriving, so history stays truthful."
       }
       onCreate={(input) => fetchClients.admins.POST([], { json: input }).then(refresh)}
       onSetDisabled={(id, disabled) =>

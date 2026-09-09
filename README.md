@@ -107,6 +107,28 @@ Every rule lives in `domain/` exactly once. The three folders and the two worker
 are five entry points into the same implementation, which is why a rule cannot
 hold over HTTP and quietly not hold over SMTP.
 
+### The web application
+
+Tailwind v4 (configured in CSS, in `src/hub/styles.css`) plus a set of
+[shadcn/ui](https://ui.shadcn.com) components vendored into
+`src/hub/components/ui/` — copied source rather than an installed design system,
+which is the same bargain KosmoJS makes about frameworks. Radix supplies the
+behaviour underneath: dialogs that trap and restore focus, menus that work from
+the keyboard, a select that is not a `<select>` pretending.
+
+Two conventions worth knowing before editing it:
+
+- `components/ui/` is a general-purpose kit that could belong to any app.
+  `components/domain.tsx` is the layer above it that knows an email has a
+  lifecycle state and that a collection id is a credential.
+- The four lifecycle colours are theme tokens (`--pending`, `--ready`,
+  `--sent`, `--bounced`), not neutral greys. They are the two orthogonal axes of
+  §2.7, read at a glance across a hundred rows, so they survive the palette.
+
+There are no `window.confirm` or `window.prompt` calls. Destructive actions get
+a dialog that spells out the consequence — disabling an admin revokes a whole
+subtree's sessions — and the irreversible ones ask you to type the object's name.
+
 ### Where authorization lives, and why
 
 Two mechanisms, chosen for different reasons:
