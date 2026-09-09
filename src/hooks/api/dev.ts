@@ -1,15 +1,17 @@
 import { getRequestListener } from "@hono/node-server";
 
-import app from "./app";
+import { closeDb } from "@/db";
 
 import { devSetup } from "_/api:factory";
+
+import app from "./app";
 
 export default devSetup({
   requestHandler() {
     return getRequestListener(app.fetch);
   },
   teardownHandler() {
-    // close db connections, server sockets etc.
+    closeDb();
   },
 });
 
@@ -18,4 +20,3 @@ process.on("unhandledRejection", (reason) => {
   console.error("Reason:", reason);
   process.exit(1);
 });
-

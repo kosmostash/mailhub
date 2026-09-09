@@ -1,5 +1,5 @@
 {
-  "hash": 0,
+  "hash": 1555091754,
   "params": {
     "id": "ParamsT668020972",
     "schema": [
@@ -15,24 +15,207 @@
       "name": "ParamsT668020972",
       "parameters": [],
       "comments": [],
-      "text": "{\n  \"id\": string\n}",
+      "text": "{\n  \"id\": VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
       "properties": [
         {
           "name": "id",
           "nameDeclaration": "\"id\"",
-          "text": "string",
+          "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
           "optional": false,
           "readonly": false,
-          "typeboxSchema": "string"
+          "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
         }
       ],
       "numericProperties": [],
       "booleanProperties": [],
-      "typeboxSchema": "{ \"id\": string }"
+      "typeboxSchema": "{ \"id\": (string with {\n    format: \"uuid\"\n  }) }"
     }
   },
-  "methods": [],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
-  "referencedFiles": {}
+  "methods": [
+    "GET"
+  ],
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "EmailViewT",
+        "path": "@/domain/wire"
+      },
+      "text": "import type { EmailViewT } from \"@/domain/wire\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET176077592",
+          "status": 200,
+          "contentType": "json",
+          "body": "EmailViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTGET176077592",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  collectionId: string;\n  from: {\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  };\n  to: Array<{\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  }>;\n  cc: Array<{\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  }>;\n  bcc: Array<{\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  }>;\n  subject: string;\n  text: ((string) | (null));\n  html: ((string) | (null));\n  state: ((\"pending\") | (\"ready\") | (\"sent\"));\n  deliveryStatus: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"));\n  attempts: number;\n  lastError: ((string) | (null));\n  providerMessageId: ((string) | (null));\n  source: ((\"http\") | (\"smtp\"));\n  createdAt: string;\n  reviewedAt: ((string) | (null));\n  sentAt: ((string) | (null))\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "collectionId",
+                "nameDeclaration": "collectionId",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "from",
+                "nameDeclaration": "from",
+                "text": "{\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  }",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "{ address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }"
+              },
+              {
+                "name": "to",
+                "nameDeclaration": "to",
+                "text": "Array<{\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }>"
+              },
+              {
+                "name": "cc",
+                "nameDeclaration": "cc",
+                "text": "Array<{\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }>"
+              },
+              {
+                "name": "bcc",
+                "nameDeclaration": "bcc",
+                "text": "Array<{\n    address: VRefine<string, {\n      format: \"email\"\n    }>;\n    name?: VRefine<string, {\n      maxLength: 200\n    }>\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }>"
+              },
+              {
+                "name": "subject",
+                "nameDeclaration": "subject",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "text",
+                "nameDeclaration": "text",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "html",
+                "nameDeclaration": "html",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "state",
+                "nameDeclaration": "state",
+                "text": "((\"pending\") | (\"ready\") | (\"sent\"))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((\"pending\") | (\"ready\") | (\"sent\"))"
+              },
+              {
+                "name": "deliveryStatus",
+                "nameDeclaration": "deliveryStatus",
+                "text": "((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\"))"
+              },
+              {
+                "name": "attempts",
+                "nameDeclaration": "attempts",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "lastError",
+                "nameDeclaration": "lastError",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "providerMessageId",
+                "nameDeclaration": "providerMessageId",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "source",
+                "nameDeclaration": "source",
+                "text": "((\"http\") | (\"smtp\"))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((\"http\") | (\"smtp\"))"
+              },
+              {
+                "name": "createdAt",
+                "nameDeclaration": "createdAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "reviewedAt",
+                "nameDeclaration": "reviewedAt",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "sentAt",
+                "nameDeclaration": "sentAt",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              }
+            ],
+            "numericProperties": [
+              "attempts"
+            ],
+            "booleanProperties": [],
+            "typeboxSchema": "{ id: string, collectionId: string, from: { address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }, to: Array<{ address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }>, cc: Array<{ address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }>, bcc: Array<{ address: (string with {\n      format: \"email\"\n    }), name?: (string with {\n      maxLength: 200\n    }) }>, subject: string, text: ((string) | (null)), html: ((string) | (null)), state: ((\"pending\") | (\"ready\") | (\"sent\")), deliveryStatus: ((\"unknown\") | (\"sent\") | (\"delivered\") | (\"bounced\")), attempts: number, lastError: ((string) | (null)), providerMessageId: ((string) | (null)), source: ((\"http\") | (\"smtp\")), createdAt: string, reviewedAt: ((string) | (null)), sentAt: ((string) | (null)) }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "domain/wire.ts": 2308860678
+  }
 }

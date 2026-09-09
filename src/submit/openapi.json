@@ -19,7 +19,71 @@
       "description": "Self-hosted install"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/emails/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/emails_id_index_ts_1024328597_ResponseTGET176077592"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/emails_id_index_ts_1024328597_ParamsT668020972_id3208210256"
+          }
+        ]
+      }
+    },
+    "/emails": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/emails_index_ts_699818781_ResponseTPOST297009178"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/emails_index_ts_699818781_JsonTPOST2963885276"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/health_index_ts_3040421798_ResponseTGET458777689"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "components": {
     "parameters": {
       "emails_id_index_ts_1024328597_ParamsT668020972_id3208210256": {
@@ -27,10 +91,568 @@
         "in": "path",
         "required": true,
         "schema": {
-          "type": "string"
+          "type": "string",
+          "format": "uuid"
         }
       }
     },
-    "schemas": {}
+    "schemas": {
+      "emails_id_index_ts_1024328597_ResponseTGET176077592": {
+        "type": "object",
+        "required": [
+          "id",
+          "collectionId",
+          "from",
+          "to",
+          "cc",
+          "bcc",
+          "subject",
+          "text",
+          "html",
+          "state",
+          "deliveryStatus",
+          "attempts",
+          "lastError",
+          "providerMessageId",
+          "source",
+          "createdAt",
+          "reviewedAt",
+          "sentAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "collectionId": {
+            "type": "string"
+          },
+          "from": {
+            "type": "object",
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "format": "email"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 200
+              }
+            }
+          },
+          "to": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "cc": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "bcc": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "subject": {
+            "type": "string"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "html": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "state": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "pending"
+              },
+              {
+                "type": "string",
+                "const": "ready"
+              },
+              {
+                "type": "string",
+                "const": "sent"
+              }
+            ]
+          },
+          "deliveryStatus": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "unknown"
+              },
+              {
+                "type": "string",
+                "const": "sent"
+              },
+              {
+                "type": "string",
+                "const": "delivered"
+              },
+              {
+                "type": "string",
+                "const": "bounced"
+              }
+            ]
+          },
+          "attempts": {
+            "type": "number"
+          },
+          "lastError": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "providerMessageId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "http"
+              },
+              {
+                "type": "string",
+                "const": "smtp"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "reviewedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sentAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "emails_index_ts_699818781_JsonTPOST2963885276": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "subject"
+        ],
+        "properties": {
+          "from": {
+            "type": "object",
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "format": "email"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 200
+              }
+            }
+          },
+          "to": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "cc": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "maxItems": 100
+          },
+          "bcc": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            },
+            "maxItems": 100
+          },
+          "subject": {
+            "type": "string",
+            "maxLength": 998
+          },
+          "text": {
+            "type": "string"
+          },
+          "html": {
+            "type": "string"
+          }
+        }
+      },
+      "emails_index_ts_699818781_ResponseTPOST297009178": {
+        "type": "object",
+        "required": [
+          "id",
+          "collectionId",
+          "from",
+          "to",
+          "cc",
+          "bcc",
+          "subject",
+          "text",
+          "html",
+          "state",
+          "deliveryStatus",
+          "attempts",
+          "lastError",
+          "providerMessageId",
+          "source",
+          "createdAt",
+          "reviewedAt",
+          "sentAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "collectionId": {
+            "type": "string"
+          },
+          "from": {
+            "type": "object",
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "format": "email"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 200
+              }
+            }
+          },
+          "to": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "cc": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "bcc": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "address"
+              ],
+              "properties": {
+                "address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "subject": {
+            "type": "string"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "html": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "state": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "pending"
+              },
+              {
+                "type": "string",
+                "const": "ready"
+              },
+              {
+                "type": "string",
+                "const": "sent"
+              }
+            ]
+          },
+          "deliveryStatus": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "unknown"
+              },
+              {
+                "type": "string",
+                "const": "sent"
+              },
+              {
+                "type": "string",
+                "const": "delivered"
+              },
+              {
+                "type": "string",
+                "const": "bounced"
+              }
+            ]
+          },
+          "attempts": {
+            "type": "number"
+          },
+          "lastError": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "providerMessageId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "http"
+              },
+              {
+                "type": "string",
+                "const": "smtp"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "reviewedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sentAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "health_index_ts_3040421798_ResponseTGET458777689": {
+        "type": "object",
+        "required": [
+          "status",
+          "storage"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok"
+          },
+          "storage": {
+            "type": "string",
+            "const": "ok"
+          }
+        }
+      }
+    }
   }
 }

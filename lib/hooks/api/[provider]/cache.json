@@ -1,5 +1,5 @@
 {
-  "hash": 0,
+  "hash": 2179913700,
   "params": {
     "id": "ParamsT2055526591",
     "schema": [
@@ -15,24 +15,96 @@
       "name": "ParamsT2055526591",
       "parameters": [],
       "comments": [],
-      "text": "{\n  \"provider\": string\n}",
+      "text": "{\n  \"provider\": VRefine<string, {\n    minLength: 1;\n    maxLength: 40;\n    pattern: \"^[a-z0-9_-]+$\"\n  }>\n}",
       "properties": [
         {
           "name": "provider",
           "nameDeclaration": "\"provider\"",
-          "text": "string",
+          "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 40;\n    pattern: \"^[a-z0-9_-]+$\"\n  }>",
           "optional": false,
           "readonly": false,
-          "typeboxSchema": "string"
+          "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 40;\n    pattern: \"^[a-z0-9_-]+$\"\n  })"
         }
       ],
       "numericProperties": [],
       "booleanProperties": [],
-      "typeboxSchema": "{ \"provider\": string }"
+      "typeboxSchema": "{ \"provider\": (string with {\n    minLength: 1;\n    maxLength: 40;\n    pattern: \"^[a-z0-9_-]+$\"\n  }) }"
     }
   },
-  "methods": [],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
+  "methods": [
+    "POST"
+  ],
+  "typeDeclarations": [
+    {
+      "typeAliasDeclaration": {
+        "name": "WebhookResultT"
+      },
+      "text": "type WebhookResultT = {\n  /** How many events correlated with a stored email (§3.4). */\n  matched: number;\n  received: number;\n};"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "POST",
+      "target": "raw",
+      "schema": {
+        "id": "RawTPOST86264359",
+        "text": "VRefine<string, { maxLength: 1_000_000 }>",
+        "resolvedType": {
+          "kind": "TypeReference",
+          "name": "RawTPOST86264359",
+          "parameters": [],
+          "comments": [],
+          "text": "VRefine<string, {\n  maxLength: 1000000\n}>",
+          "properties": [],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "(string with {\n  maxLength: 1000000\n})"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST3544324176",
+          "status": 200,
+          "contentType": "json",
+          "body": "WebhookResultT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTPOST3544324176",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  matched: number;\n  received: number\n}",
+            "properties": [
+              {
+                "name": "matched",
+                "nameDeclaration": "matched",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "received",
+                "nameDeclaration": "received",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              }
+            ],
+            "numericProperties": [
+              "matched",
+              "received"
+            ],
+            "booleanProperties": [],
+            "typeboxSchema": "{ matched: number, received: number }"
+          }
+        }
+      ]
+    }
+  ],
   "referencedFiles": {}
 }

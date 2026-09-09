@@ -5,7 +5,7 @@
     "`kosmo typecheck` covers src/<folder>/ per folder; this covers the rest.",
     "Settings mirror lib/tsconfig.json, minus the JSX that only pages need."
   ],
-  "include": ["db/", "domain/", "workers/", "tests/", "scripts/"],
+  "include": ["db/", "domain/", "workers/", "tests/", "scripts/", "lib/env.d.ts"],
   "compilerOptions": {
     "types": ["@types/node"],
     "moduleResolution": "bundler",

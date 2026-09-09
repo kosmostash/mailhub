@@ -1,5 +1,5 @@
 {
-  "hash": 0,
+  "hash": 2514603226,
   "params": {
     "id": "ParamsT1369654896",
     "schema": [],
@@ -15,7 +15,9 @@
       "typeboxSchema": "{  }"
     }
   },
-  "methods": [],
+  "methods": [
+    "GET"
+  ],
   "typeDeclarations": [],
   "validationDefinitions": [],
   "referencedFiles": {}
