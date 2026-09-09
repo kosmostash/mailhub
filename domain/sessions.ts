@@ -189,7 +189,7 @@ export const impersonationTargets = (account: UserT): Array<UserT> => {
   return [];
 };
 
-export const start = (actor: ActorT, targetId: string): UserT => {
+export const start = (actor: ActorT, targetId: string): ActorT => {
   // Impersonation does not nest: end the current one first, then start the
   // next. Chaining through an assumed identity is exactly what §2.2 rules out.
   if (actor.impersonating) {
@@ -222,11 +222,16 @@ export const start = (actor: ActorT, targetId: string): UserT => {
     detail: { by: actor.account.email },
   });
 
-  return target;
+  return {
+    session: { ...actor.session, impersonatedUserId: target.id },
+    account: actor.account,
+    identity: target,
+    impersonating: true,
+  };
 };
 
-export const end = (actor: ActorT): void => {
-  if (!actor.impersonating) return;
+export const end = (actor: ActorT): ActorT => {
+  if (!actor.impersonating) return actor;
 
   db()
     .prepare("UPDATE sessions SET impersonated_user_id = NULL WHERE id = ?")
@@ -244,4 +249,11 @@ export const end = (actor: ActorT): void => {
         : { adminId: actor.identity.id },
     detail: { by: actor.account.email },
   });
+
+  return {
+    session: { ...actor.session, impersonatedUserId: null },
+    account: actor.account,
+    identity: actor.account,
+    impersonating: false,
+  };
 };

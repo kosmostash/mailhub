@@ -1,15 +1,23 @@
 import { getRequestListener } from "@hono/node-server";
 
-import app from "./app";
+import { closeDb } from "@/db";
+import { closeTransports } from "@/domain/delivery";
+import { close as closeSystemMail } from "@/domain/systemMail";
 
 import { devSetup } from "_/api:factory";
+
+import app from "./app";
 
 export default devSetup({
   requestHandler() {
     return getRequestListener(app.fetch);
   },
-  teardownHandler() {
-    // close db connections, server sockets etc.
+  // The API program restarts as a whole on every reload; without this the
+  // SQLite handle and any pooled SMTP socket would leak across restarts.
+  async teardownHandler() {
+    await closeTransports();
+    closeSystemMail();
+    closeDb();
   },
 });
 
@@ -18,4 +26,3 @@ process.on("unhandledRejection", (reason) => {
   console.error("Reason:", reason);
   process.exit(1);
 });
-

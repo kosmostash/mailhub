@@ -1,5 +1,5 @@
 {
-  "hash": 3188716295,
+  "hash": 821775219,
   "params": {
     "id": "ParamsT3542471662",
     "schema": [],
@@ -16,9 +16,144 @@
     }
   },
   "methods": [
-    "GET"
+    "POST"
   ],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
-  "referencedFiles": {}
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "CollectionCardT",
+        "path": "~/types/views"
+      },
+      "text": "import type { CollectionCardT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST3852567927",
+        "text": "{\n      name: VRefine<string, { minLength: 1, maxLength: 120 }>;\n      scheduleMode: \"after_review\" | \"immediate\";\n      /** One of the operator's admin's providers, or none (§2.3). */\n      providerId?: VRefine<string, { format: \"uuid\" }> | null;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST3852567927",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  name: VRefine<string, {\n    minLength: 1;\n    maxLength: 120\n  }>;\n  scheduleMode: ((\"after_review\") | (\"immediate\"));\n  providerId?: ((VRefine<string, {\n    format: \"uuid\"\n  }>) | (null))\n}",
+          "properties": [
+            {
+              "name": "name",
+              "nameDeclaration": "name",
+              "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 120\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 120\n  })"
+            },
+            {
+              "name": "scheduleMode",
+              "nameDeclaration": "scheduleMode",
+              "text": "((\"after_review\") | (\"immediate\"))",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "((\"after_review\") | (\"immediate\"))"
+            },
+            {
+              "name": "providerId",
+              "nameDeclaration": "providerId",
+              "text": "((VRefine<string, {\n    format: \"uuid\"\n  }>) | (null))",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(((string with {\n    format: \"uuid\"\n  })) | (null))"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ name: (string with {\n    minLength: 1;\n    maxLength: 120\n  }), scheduleMode: ((\"after_review\") | (\"immediate\")), providerId?: (((string with {\n    format: \"uuid\"\n  })) | (null)) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST3325353673",
+          "status": 201,
+          "contentType": "json",
+          "body": "CollectionCardT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTPOST3325353673",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  name: string;\n  scheduleMode: ((\"after_review\") | (\"immediate\"));\n  providerId: ((string) | (null));\n  providerName: ((string) | (null));\n  owner: {\n    id: string;\n    email: string;\n    role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n  };\n  counters: {\n    total: number;\n    pending: number;\n    ready: number;\n    sent: number;\n    delivered: number;\n    bounced: number\n  }\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "name",
+                "nameDeclaration": "name",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "scheduleMode",
+                "nameDeclaration": "scheduleMode",
+                "text": "((\"after_review\") | (\"immediate\"))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((\"after_review\") | (\"immediate\"))"
+              },
+              {
+                "name": "providerId",
+                "nameDeclaration": "providerId",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "providerName",
+                "nameDeclaration": "providerName",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "owner",
+                "nameDeclaration": "owner",
+                "text": "{\n    id: string;\n    email: string;\n    role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n  }",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "{ id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }"
+              },
+              {
+                "name": "counters",
+                "nameDeclaration": "counters",
+                "text": "{\n    total: number;\n    pending: number;\n    ready: number;\n    sent: number;\n    delivered: number;\n    bounced: number\n  }",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "{ total: number, pending: number, ready: number, sent: number, delivered: number, bounced: number }"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ id: string, name: string, scheduleMode: ((\"after_review\") | (\"immediate\")), providerId: ((string) | (null)), providerName: ((string) | (null)), owner: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, counters: { total: number, pending: number, ready: number, sent: number, delivered: number, bounced: number } }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2801502671
+  }
 }

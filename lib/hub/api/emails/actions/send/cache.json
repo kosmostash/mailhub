@@ -1,5 +1,5 @@
 {
-  "hash": 3932194701,
+  "hash": 2471380835,
   "params": {
     "id": "ParamsT1630357400",
     "schema": [],
@@ -16,9 +16,80 @@
     }
   },
   "methods": [
-    "GET"
+    "POST"
   ],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
-  "referencedFiles": {}
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "OutcomeViewT",
+        "path": "~/types/views"
+      },
+      "text": "import type { OutcomeViewT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST2693448674",
+        "text": "{\n      ids: VRefine<Array<VRefine<string, { format: \"uuid\" }>>, { minItems: 1, maxItems: 200 }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST2693448674",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  ids: VRefine<Array<VRefine<string, {\n    format: \"uuid\"\n  }>>, {\n    minItems: 1;\n    maxItems: 200\n  }>\n}",
+          "properties": [
+            {
+              "name": "ids",
+              "nameDeclaration": "ids",
+              "text": "VRefine<Array<VRefine<string, {\n    format: \"uuid\"\n  }>>, {\n    minItems: 1;\n    maxItems: 200\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(Array<(string with {\n    format: \"uuid\"\n  })> with {\n    minItems: 1;\n    maxItems: 200\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ ids: (Array<(string with {\n    format: \"uuid\"\n  })> with {\n    minItems: 1;\n    maxItems: 200\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST3829878672",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ outcomes: Array<OutcomeViewT> }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPOST3829878672",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  outcomes: Array<{\n    id: string;\n    ok: boolean;\n    error?: string;\n    code?: string\n  }>\n}",
+            "properties": [
+              {
+                "name": "outcomes",
+                "nameDeclaration": "outcomes",
+                "text": "Array<{\n    id: string;\n    ok: boolean;\n    error?: string;\n    code?: string\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, ok: boolean, error?: string, code?: string }>"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ outcomes: Array<{ id: string, ok: boolean, error?: string, code?: string }> }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2801502671
+  }
 }

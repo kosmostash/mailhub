@@ -1,9 +1,24 @@
+import * as sender from "@/domain/sender";
+
 import { defineRoute } from "_/api";
 
-export default defineRoute<"emails/actions/approve">(({ GET }) => [
-  GET(async (ctx) => {
-    // Always `return` the response!
-    // ❗ Never call `ctx.json()` / `ctx.text()` / `ctx.body()` without returning!
-    return ctx.text("emails/actions/approve route starts here - replace this response with real logic.");
+import type { OutcomeViewT } from "~/types/views";
+
+/**
+ * Approve emails - `pending -> ready` (§2.7, §5.5).
+ *
+ * Takes a list so the review queue can be cleared in one action, and reports
+ * one outcome per id: an id that is not awaiting review says so and the rest
+ * of the batch proceeds.
+ */
+export default defineRoute<"emails/actions/approve">(({ POST }) => [
+  POST<{
+    json: {
+      ids: VRefine<Array<VRefine<string, { format: "uuid" }>>, { minItems: 1, maxItems: 500 }>;
+    };
+    response: [200, "json", { outcomes: Array<OutcomeViewT> }];
+  }>(async (ctx) => {
+    const outcomes = sender.approveMany(ctx.get("actor"), ctx.validated.json.ids);
+    return ctx.json({ outcomes });
   }),
 ]);

@@ -1,5 +1,5 @@
 {
-  "hash": 2975972126,
+  "hash": 3603046511,
   "params": {
     "id": "ParamsT1262528991",
     "schema": [],
@@ -16,9 +16,145 @@
     }
   },
   "methods": [
-    "GET"
+    "GET",
+    "POST"
   ],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
-  "referencedFiles": {}
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "TestAddressViewT",
+        "path": "~/types/views"
+      },
+      "text": "import type { TestAddressViewT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET1266222180",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ testAddresses: Array<TestAddressViewT> }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTGET1266222180",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  testAddresses: Array<{\n    id: string;\n    address: string;\n    label: ((string) | (null));\n    createdAt: string\n  }>\n}",
+            "properties": [
+              {
+                "name": "testAddresses",
+                "nameDeclaration": "testAddresses",
+                "text": "Array<{\n    id: string;\n    address: string;\n    label: ((string) | (null));\n    createdAt: string\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, address: string, label: ((string) | (null)), createdAt: string }>"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ testAddresses: Array<{ id: string, address: string, label: ((string) | (null)), createdAt: string }> }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST3983687089",
+        "text": "{\n      address: VRefine<string, { format: \"email\", maxLength: 320 }>;\n      label?: VRefine<string, { maxLength: 80 }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST3983687089",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  address: VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>;\n  label?: VRefine<string, {\n    maxLength: 80\n  }>\n}",
+          "properties": [
+            {
+              "name": "address",
+              "nameDeclaration": "address",
+              "text": "VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"email\";\n    maxLength: 320\n  })"
+            },
+            {
+              "name": "label",
+              "nameDeclaration": "label",
+              "text": "VRefine<string, {\n    maxLength: 80\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    maxLength: 80\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ address: (string with {\n    format: \"email\";\n    maxLength: 320\n  }), label?: (string with {\n    maxLength: 80\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST2334426939",
+          "status": 201,
+          "contentType": "json",
+          "body": "TestAddressViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTPOST2334426939",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  address: string;\n  label: ((string) | (null));\n  createdAt: string\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "address",
+                "nameDeclaration": "address",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "label",
+                "nameDeclaration": "label",
+                "text": "((string) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((string) | (null))"
+              },
+              {
+                "name": "createdAt",
+                "nameDeclaration": "createdAt",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ id: string, address: string, label: ((string) | (null)), createdAt: string }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2801502671
+  }
 }

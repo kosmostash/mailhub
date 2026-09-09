@@ -1,6 +1,10 @@
 # build output dir; if you edit distDir in package.json, make sure to update here too
 /dist/
 
+# the worker bundles - beside dist/, because dist/run.js reads every directory
+# in there as a source folder
+/dist-workers/
+
 # used for Vite cache
 /var/
 

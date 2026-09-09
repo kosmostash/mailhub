@@ -5,12 +5,18 @@
   "previewPort": 4558,
   "scripts": {
     "dev": "kosmo serve",
+    "dev:sender": "tsx watch workers/sender.ts",
+    "dev:smtp": "tsx watch workers/smtp.ts",
+    "build": "kosmo build && node scripts/build-workers.mjs",
     "preview": "kosmo preview",
-    "build": "kosmo build",
+    "start": "node dist/run.js",
+    "start:sender": "node dist-workers/sender.js",
+    "start:smtp": "node dist-workers/smtp.js",
     "typecheck": "kosmo typecheck && tsc --noEmit -p tsconfig.shared.json",
     "folder": "kosmo folder",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "conformance": "node scripts/conformance.mjs"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
@@ -33,6 +39,7 @@
     "@types/better-sqlite3": "^9.6.0",
     "@types/bun": "^1.4.2",
     "@types/deno": "^2.7.0",
+    "@types/mailparser": "^3.4.6",
     "@types/node": "^26.5.0",
     "@types/nodemailer": "^8.0.1",
     "@types/react": "^19.2.18",

@@ -1,5 +1,5 @@
 {
-  "hash": 1062481043,
+  "hash": 1857195702,
   "params": {
     "id": "ParamsT3867600430",
     "schema": [
@@ -15,26 +15,89 @@
       "name": "ParamsT3867600430",
       "parameters": [],
       "comments": [],
-      "text": "{\n  \"id\": string\n}",
+      "text": "{\n  \"id\": VRefine<string, {\n    format: \"uuid\"\n  }>\n}",
       "properties": [
         {
           "name": "id",
           "nameDeclaration": "\"id\"",
-          "text": "string",
+          "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
           "optional": false,
           "readonly": false,
-          "typeboxSchema": "string"
+          "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
         }
       ],
       "numericProperties": [],
       "booleanProperties": [],
-      "typeboxSchema": "{ \"id\": string }"
+      "typeboxSchema": "{ \"id\": (string with {\n    format: \"uuid\"\n  }) }"
     }
   },
   "methods": [
-    "GET"
+    "PUT"
   ],
   "typeDeclarations": [],
-  "validationDefinitions": [],
+  "validationDefinitions": [
+    {
+      "method": "PUT",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPUT2672235502",
+        "text": "{ password: VRefine<string, { minLength: 10, maxLength: 512 }> }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPUT2672235502",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  password: VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>\n}",
+          "properties": [
+            {
+              "name": "password",
+              "nameDeclaration": "password",
+              "text": "VRefine<string, {\n    minLength: 10;\n    maxLength: 512\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 10;\n    maxLength: 512\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ password: (string with {\n    minLength: 10;\n    maxLength: 512\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "PUT",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPUT3144032880",
+          "status": 200,
+          "contentType": "json",
+          "body": "{ ok: true }",
+          "resolvedType": {
+            "kind": "TypeLiteral",
+            "name": "ResponseTPUT3144032880",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  ok: true\n}",
+            "properties": [
+              {
+                "name": "ok",
+                "nameDeclaration": "ok",
+                "text": "true",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "true"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [
+              "ok"
+            ],
+            "typeboxSchema": "{ ok: true }"
+          }
+        }
+      ]
+    }
+  ],
   "referencedFiles": {}
 }

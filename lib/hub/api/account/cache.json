@@ -1,5 +1,5 @@
 {
-  "hash": 1017648747,
+  "hash": 1873007481,
   "params": {
     "id": "ParamsT2100713124",
     "schema": [],
@@ -18,7 +18,96 @@
   "methods": [
     "GET"
   ],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
-  "referencedFiles": {}
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "TestAddressViewT",
+        "path": "~/types/views"
+      },
+      "text": "import type { TestAddressViewT } from \"~/types/views\";"
+    },
+    {
+      "typeAliasDeclaration": {
+        "name": "AccountViewT"
+      },
+      "text": "type AccountViewT = {\n  id: string;\n  email: string;\n  role: \"superadmin\" | \"admin\" | \"operator\";\n  /** An outstanding credential change waiting on its code (§2.1.7). */\n  pendingChange: {\n    purpose: \"email\" | \"password\";\n    sentTo: string;\n    expiresAt: string;\n    via: string;\n  } | null;\n  /** Operators only - admins and the superadmin have none of their own (§2.5). */\n  testAddresses: Array<TestAddressViewT>;\n  /** Who this account may assume, for the impersonation control (§2.2). */\n  impersonationTargets: Array<{ id: string; email: string; role: string }>;\n};"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET2583793379",
+          "status": 200,
+          "contentType": "json",
+          "body": "AccountViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTGET2583793379",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  id: string;\n  email: string;\n  role: ((\"superadmin\") | (\"admin\") | (\"operator\"));\n  pendingChange: (({\n    purpose: ((\"email\") | (\"password\"));\n    sentTo: string;\n    expiresAt: string;\n    via: string\n  }) | (null));\n  testAddresses: Array<{\n    id: string;\n    address: string;\n    label: ((string) | (null));\n    createdAt: string\n  }>;\n  impersonationTargets: Array<{\n    id: string;\n    email: string;\n    role: string\n  }>\n}",
+            "properties": [
+              {
+                "name": "id",
+                "nameDeclaration": "id",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "email",
+                "nameDeclaration": "email",
+                "text": "string",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "string"
+              },
+              {
+                "name": "role",
+                "nameDeclaration": "role",
+                "text": "((\"superadmin\") | (\"admin\") | (\"operator\"))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "((\"superadmin\") | (\"admin\") | (\"operator\"))"
+              },
+              {
+                "name": "pendingChange",
+                "nameDeclaration": "pendingChange",
+                "text": "(({\n    purpose: ((\"email\") | (\"password\"));\n    sentTo: string;\n    expiresAt: string;\n    via: string\n  }) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "(({ purpose: ((\"email\") | (\"password\")), sentTo: string, expiresAt: string, via: string }) | (null))"
+              },
+              {
+                "name": "testAddresses",
+                "nameDeclaration": "testAddresses",
+                "text": "Array<{\n    id: string;\n    address: string;\n    label: ((string) | (null));\n    createdAt: string\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, address: string, label: ((string) | (null)), createdAt: string }>"
+              },
+              {
+                "name": "impersonationTargets",
+                "nameDeclaration": "impersonationTargets",
+                "text": "Array<{\n    id: string;\n    email: string;\n    role: string\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, email: string, role: string }>"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [],
+            "typeboxSchema": "{ id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")), pendingChange: (({ purpose: ((\"email\") | (\"password\")), sentTo: string, expiresAt: string, via: string }) | (null)), testAddresses: Array<{ id: string, address: string, label: ((string) | (null)), createdAt: string }>, impersonationTargets: Array<{ id: string, email: string, role: string }> }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2801502671
+  }
 }

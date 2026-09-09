@@ -1,5 +1,5 @@
 {
-  "hash": 1739638389,
+  "hash": 4122557075,
   "params": {
     "id": "ParamsT3494172116",
     "schema": [],
@@ -16,9 +16,184 @@
     }
   },
   "methods": [
-    "GET"
+    "GET",
+    "POST",
+    "DELETE"
   ],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
-  "referencedFiles": {}
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "SessionViewT",
+        "path": "~/types/views"
+      },
+      "text": "import type { SessionViewT } from \"~/types/views\";"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET3867457522",
+          "status": 200,
+          "contentType": "json",
+          "body": "SessionViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTGET3867457522",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  actor: (({\n    account: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    identity: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    impersonating: boolean;\n    capabilities: {\n      manageCollections: boolean;\n      manageProviders: boolean;\n      manageOperators: boolean;\n      manageAdmins: boolean;\n      impersonate: boolean\n    }\n  }) | (null));\n  needsBootstrap: boolean\n}",
+            "properties": [
+              {
+                "name": "actor",
+                "nameDeclaration": "actor",
+                "text": "(({\n    account: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    identity: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    impersonating: boolean;\n    capabilities: {\n      manageCollections: boolean;\n      manageProviders: boolean;\n      manageOperators: boolean;\n      manageAdmins: boolean;\n      impersonate: boolean\n    }\n  }) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "(({ account: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, identity: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, impersonating: boolean, capabilities: { manageCollections: boolean, manageProviders: boolean, manageOperators: boolean, manageAdmins: boolean, impersonate: boolean } }) | (null))"
+              },
+              {
+                "name": "needsBootstrap",
+                "nameDeclaration": "needsBootstrap",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [
+              "needsBootstrap"
+            ],
+            "typeboxSchema": "{ actor: (({ account: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, identity: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, impersonating: boolean, capabilities: { manageCollections: boolean, manageProviders: boolean, manageOperators: boolean, manageAdmins: boolean, impersonate: boolean } }) | (null)), needsBootstrap: boolean }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "target": "json",
+      "schema": {
+        "id": "JsonTPOST3608539142",
+        "text": "{\n      email: VRefine<string, { format: \"email\", maxLength: 320 }>;\n      password: VRefine<string, { minLength: 1, maxLength: 512 }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "JsonTPOST3608539142",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  email: VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>;\n  password: VRefine<string, {\n    minLength: 1;\n    maxLength: 512\n  }>\n}",
+          "properties": [
+            {
+              "name": "email",
+              "nameDeclaration": "email",
+              "text": "VRefine<string, {\n    format: \"email\";\n    maxLength: 320\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"email\";\n    maxLength: 320\n  })"
+            },
+            {
+              "name": "password",
+              "nameDeclaration": "password",
+              "text": "VRefine<string, {\n    minLength: 1;\n    maxLength: 512\n  }>",
+              "optional": false,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    minLength: 1;\n    maxLength: 512\n  })"
+            }
+          ],
+          "numericProperties": [],
+          "booleanProperties": [],
+          "typeboxSchema": "{ email: (string with {\n    format: \"email\";\n    maxLength: 320\n  }), password: (string with {\n    minLength: 1;\n    maxLength: 512\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTPOST3867457522",
+          "status": 200,
+          "contentType": "json",
+          "body": "SessionViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTPOST3867457522",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  actor: (({\n    account: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    identity: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    impersonating: boolean;\n    capabilities: {\n      manageCollections: boolean;\n      manageProviders: boolean;\n      manageOperators: boolean;\n      manageAdmins: boolean;\n      impersonate: boolean\n    }\n  }) | (null));\n  needsBootstrap: boolean\n}",
+            "properties": [
+              {
+                "name": "actor",
+                "nameDeclaration": "actor",
+                "text": "(({\n    account: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    identity: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    impersonating: boolean;\n    capabilities: {\n      manageCollections: boolean;\n      manageProviders: boolean;\n      manageOperators: boolean;\n      manageAdmins: boolean;\n      impersonate: boolean\n    }\n  }) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "(({ account: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, identity: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, impersonating: boolean, capabilities: { manageCollections: boolean, manageProviders: boolean, manageOperators: boolean, manageAdmins: boolean, impersonate: boolean } }) | (null))"
+              },
+              {
+                "name": "needsBootstrap",
+                "nameDeclaration": "needsBootstrap",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [
+              "needsBootstrap"
+            ],
+            "typeboxSchema": "{ actor: (({ account: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, identity: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, impersonating: boolean, capabilities: { manageCollections: boolean, manageProviders: boolean, manageOperators: boolean, manageAdmins: boolean, impersonate: boolean } }) | (null)), needsBootstrap: boolean }"
+          }
+        }
+      ]
+    },
+    {
+      "method": "DELETE",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTDELETE3867457522",
+          "status": 200,
+          "contentType": "json",
+          "body": "SessionViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTDELETE3867457522",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  actor: (({\n    account: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    identity: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    impersonating: boolean;\n    capabilities: {\n      manageCollections: boolean;\n      manageProviders: boolean;\n      manageOperators: boolean;\n      manageAdmins: boolean;\n      impersonate: boolean\n    }\n  }) | (null));\n  needsBootstrap: boolean\n}",
+            "properties": [
+              {
+                "name": "actor",
+                "nameDeclaration": "actor",
+                "text": "(({\n    account: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    identity: {\n      id: string;\n      email: string;\n      role: ((\"superadmin\") | (\"admin\") | (\"operator\"))\n    };\n    impersonating: boolean;\n    capabilities: {\n      manageCollections: boolean;\n      manageProviders: boolean;\n      manageOperators: boolean;\n      manageAdmins: boolean;\n      impersonate: boolean\n    }\n  }) | (null))",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "(({ account: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, identity: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, impersonating: boolean, capabilities: { manageCollections: boolean, manageProviders: boolean, manageOperators: boolean, manageAdmins: boolean, impersonate: boolean } }) | (null))"
+              },
+              {
+                "name": "needsBootstrap",
+                "nameDeclaration": "needsBootstrap",
+                "text": "boolean",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "boolean"
+              }
+            ],
+            "numericProperties": [],
+            "booleanProperties": [
+              "needsBootstrap"
+            ],
+            "typeboxSchema": "{ actor: (({ account: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, identity: { id: string, email: string, role: ((\"superadmin\") | (\"admin\") | (\"operator\")) }, impersonating: boolean, capabilities: { manageCollections: boolean, manageProviders: boolean, manageOperators: boolean, manageAdmins: boolean, impersonate: boolean } }) | (null)), needsBootstrap: boolean }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2801502671
+  }
 }

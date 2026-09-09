@@ -1,5 +1,5 @@
 {
-  "hash": 2495986458,
+  "hash": 2206593392,
   "params": {
     "id": "ParamsT2893285722",
     "schema": [],
@@ -18,7 +18,155 @@
   "methods": [
     "GET"
   ],
-  "typeDeclarations": [],
-  "validationDefinitions": [],
-  "referencedFiles": {}
+  "typeDeclarations": [
+    {
+      "importDeclaration": {
+        "name": "ActivityViewT",
+        "path": "~/types/views"
+      },
+      "text": "import type { ActivityViewT } from \"~/types/views\";"
+    },
+    {
+      "typeAliasDeclaration": {
+        "name": "ActivityPageViewT"
+      },
+      "text": "type ActivityPageViewT = {\n  entries: Array<ActivityViewT>;\n  total: number;\n  limit: number;\n  offset: number;\n  /** Who the trail can be narrowed to, for the filter control (§5.9). */\n  operators: Array<{ id: string; email: string }>;\n  admins: Array<{ id: string; email: string }>;\n};"
+    }
+  ],
+  "validationDefinitions": [
+    {
+      "method": "GET",
+      "target": "query",
+      "schema": {
+        "id": "QueryTGET697339557",
+        "text": "{\n      operatorId?: VRefine<string, { format: \"uuid\" }>;\n      adminId?: VRefine<string, { format: \"uuid\" }>;\n      limit?: VRefine<number, { minimum: 1, maximum: 200, multipleOf: 1 }>;\n      offset?: VRefine<number, { minimum: 0, multipleOf: 1 }>;\n    }",
+        "resolvedType": {
+          "kind": "TypeLiteral",
+          "name": "QueryTGET697339557",
+          "parameters": [],
+          "comments": [],
+          "text": "{\n  operatorId?: VRefine<string, {\n    format: \"uuid\"\n  }>;\n  adminId?: VRefine<string, {\n    format: \"uuid\"\n  }>;\n  limit?: VRefine<number, {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  }>;\n  offset?: VRefine<number, {\n    minimum: 0;\n    multipleOf: 1\n  }>\n}",
+          "properties": [
+            {
+              "name": "operatorId",
+              "nameDeclaration": "operatorId",
+              "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+            },
+            {
+              "name": "adminId",
+              "nameDeclaration": "adminId",
+              "text": "VRefine<string, {\n    format: \"uuid\"\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(string with {\n    format: \"uuid\"\n  })"
+            },
+            {
+              "name": "limit",
+              "nameDeclaration": "limit",
+              "text": "VRefine<number, {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(number with {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  })"
+            },
+            {
+              "name": "offset",
+              "nameDeclaration": "offset",
+              "text": "VRefine<number, {\n    minimum: 0;\n    multipleOf: 1\n  }>",
+              "optional": true,
+              "readonly": false,
+              "typeboxSchema": "(number with {\n    minimum: 0;\n    multipleOf: 1\n  })"
+            }
+          ],
+          "numericProperties": [
+            "limit",
+            "offset"
+          ],
+          "booleanProperties": [],
+          "typeboxSchema": "{ operatorId?: (string with {\n    format: \"uuid\"\n  }), adminId?: (string with {\n    format: \"uuid\"\n  }), limit?: (number with {\n    minimum: 1;\n    maximum: 200;\n    multipleOf: 1\n  }), offset?: (number with {\n    minimum: 0;\n    multipleOf: 1\n  }) }"
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "target": "response",
+      "variants": [
+        {
+          "id": "ResponseTGET3593059769",
+          "status": 200,
+          "contentType": "json",
+          "body": "ActivityPageViewT",
+          "resolvedType": {
+            "kind": "TypeReference",
+            "name": "ResponseTGET3593059769",
+            "parameters": [],
+            "comments": [],
+            "text": "{\n  entries: Array<{\n    id: number;\n    action: string;\n    objectType: string;\n    objectId: ((string) | (null));\n    objectLabel: ((string) | (null));\n    actorKind: ((\"user\") | (\"sender\") | (\"smtp\"));\n    actorEmail: ((string) | (null));\n    actorRole: ((string) | (null));\n    impersonatorEmail: ((string) | (null));\n    detail: (({\n      [k: string]: ((string) | (number) | (boolean) | (null))\n    }) | (null));\n    createdAt: string\n  }>;\n  total: number;\n  limit: number;\n  offset: number;\n  operators: Array<{\n    id: string;\n    email: string\n  }>;\n  admins: Array<{\n    id: string;\n    email: string\n  }>\n}",
+            "properties": [
+              {
+                "name": "entries",
+                "nameDeclaration": "entries",
+                "text": "Array<{\n    id: number;\n    action: string;\n    objectType: string;\n    objectId: ((string) | (null));\n    objectLabel: ((string) | (null));\n    actorKind: ((\"user\") | (\"sender\") | (\"smtp\"));\n    actorEmail: ((string) | (null));\n    actorRole: ((string) | (null));\n    impersonatorEmail: ((string) | (null));\n    detail: (({\n      [k: string]: ((string) | (number) | (boolean) | (null))\n    }) | (null));\n    createdAt: string\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: number, action: string, objectType: string, objectId: ((string) | (null)), objectLabel: ((string) | (null)), actorKind: ((\"user\") | (\"sender\") | (\"smtp\")), actorEmail: ((string) | (null)), actorRole: ((string) | (null)), impersonatorEmail: ((string) | (null)), detail: (({ [k: string]: ((string) | (number) | (boolean) | (null)) }) | (null)), createdAt: string }>"
+              },
+              {
+                "name": "total",
+                "nameDeclaration": "total",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "limit",
+                "nameDeclaration": "limit",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "offset",
+                "nameDeclaration": "offset",
+                "text": "number",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "number"
+              },
+              {
+                "name": "operators",
+                "nameDeclaration": "operators",
+                "text": "Array<{\n    id: string;\n    email: string\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, email: string }>"
+              },
+              {
+                "name": "admins",
+                "nameDeclaration": "admins",
+                "text": "Array<{\n    id: string;\n    email: string\n  }>",
+                "optional": false,
+                "readonly": false,
+                "typeboxSchema": "Array<{ id: string, email: string }>"
+              }
+            ],
+            "numericProperties": [
+              "total",
+              "limit",
+              "offset"
+            ],
+            "booleanProperties": [],
+            "typeboxSchema": "{ entries: Array<{ id: number, action: string, objectType: string, objectId: ((string) | (null)), objectLabel: ((string) | (null)), actorKind: ((\"user\") | (\"sender\") | (\"smtp\")), actorEmail: ((string) | (null)), actorRole: ((string) | (null)), impersonatorEmail: ((string) | (null)), detail: (({ [k: string]: ((string) | (number) | (boolean) | (null)) }) | (null)), createdAt: string }>, total: number, limit: number, offset: number, operators: Array<{ id: string, email: string }>, admins: Array<{ id: string, email: string }> }"
+          }
+        }
+      ]
+    }
+  ],
+  "referencedFiles": {
+    "src/hub/types/views.ts": 2801502671
+  }
 }
