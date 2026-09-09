@@ -7,8 +7,10 @@
     "dev": "kosmo serve",
     "preview": "kosmo preview",
     "build": "kosmo build",
-    "typecheck": "kosmo typecheck",
-    "folder": "kosmo folder"
+    "typecheck": "kosmo typecheck && tsc --noEmit -p tsconfig.shared.json",
+    "folder": "kosmo folder",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
@@ -42,5 +44,10 @@
     "typescript": "^7.0.2",
     "vite": "^8.2.2",
     "vitest": "^5.0.0"
-  }
+  },
+  "name": "mailhub",
+  "version": "1.0.0",
+  "description": "One self-hosted hub to store, review, and send the emails from all your projects.",
+  "license": "MIT",
+  "private": true
 }
